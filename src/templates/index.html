@@ -1,0 +1,115 @@
+{% extends "base_templates/base.html" %}
+
+{% block title %}{{_("Home")}}{% endblock %}
+
+{% block body %}
+<div id="imgCarousel" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+	    <button type="button" data-bs-target="#imgCarousel" data-bs-slide-to="0" class="active"></button>
+	    <button type="button" data-bs-target="#imgCarousel" data-bs-slide-to="1"></button>
+	    <button type="button" data-bs-target="#imgCarousel" data-bs-slide-to="2"></button>
+	</div>
+	
+	<div class="carousel-inner">
+	    <div class="carousel-item active">
+			<img src="{{url_for("static", filename="img/carousel/placeholder2.png")}}">
+
+			<div class="carousel-caption">
+				<h1>{{_("Samyar Projects Forum")}}</h1>
+				<p>{{_("Discuss several topics with other members of the forum.")}}</p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("forum_pages.index")}}">{{_("Go To SP Forum")}}</a></p>
+			</div>
+	    </div>
+	    
+		<div class="carousel-item">
+			<img src="{{url_for("static", filename="img/carousel/placeholder2.png")}}">
+
+			<div class="carousel-caption">
+				<h1>{{_("Samyar Projects Blog")}}</h1>
+				<p>{{_("Learn about the latest changes and project updates.")}}</p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("blog_pages.index")}}">{{_("Go To SP Blog")}}</a></p>
+			</div>
+	    </div>
+	    
+		<div class="carousel-item">
+			<img src="{{url_for("static", filename="img/carousel/placeholder2.png")}}">
+
+			<div class="carousel-caption">
+				<h1>{{_("View All Projects")}}</h1>
+				<p>{{_("View detailed build guides for finished projects or information and updates for ongoing projects.")}}</p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("projects_index")}}">{{_("View Projects")}}</a></p>
+			</div>
+	    </div>
+	</div>
+	
+	<button class="carousel-control-prev" type="button" data-bs-target="#imgCarousel" data-bs-slide="prev">
+	    <span class="carousel-control-prev-icon"></span>
+	</button>
+	
+	<button class="carousel-control-next" type="button" data-bs-target="#imgCarousel" data-bs-slide="next">
+	    <span class="carousel-control-next-icon"></span>
+	</button>
+</div>
+
+<div class="bg-dark text-light shadow" id="about">
+	<h1 class="text-center pt-5">{{_("About Samyar Projects")}}</h1>
+
+	<div class="album py-5">
+		<div class="container">
+			<div class="row row-cols-1 row-cols-sm-2 g-3">
+				<div class="col pe-lg-3">
+					<img class="card-img rounded-3 shadow w-100" src="{{url_for("static", filename="img/general/website_banner_1.png")}}">
+				</div>
+	
+				<div class="col">
+					<div class="card-body">
+						<p class="card-text">
+							{{_("Hello there, I'm Samyar. I'm %(dyn_age)s years old and I make electronics, robotics, 
+								and programming projects. This website is where I post all of my projects. I started 
+								programming and working with electronics about %(dyn_exp)s years ago. Since then, 
+								I have worked on (and built) quite a few projects however, most of them aren't on 
+								this website as this website is for my new and future projects. I wrote this website 
+								myself and you can find the source code on GitHub: https://github.com/Samyar-Projects/Website", dyn_age=dyn_age, dyn_exp=dyn_exp)}}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h1 class="text-center pt-5">{{_("Latest Posts")}}</h1>
+
+<div class="album pb-sm-5 pt-4 pb-4">
+	<div class="container">
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+			{% for post in posts %}
+			<div class="col">
+				<div class="card shadow">
+					<img class="card-img-top w-100" src="{{url_for("static", filename=post.thumb_url)}}">
+
+					<div class="card-body">
+						<p class="card-text">{{post.title}}</p>
+							
+						<div class="d-flex justify-content-between align-items-center">
+							<a href="{{post.url}}" class="btn btn-sm btn-outline-secondary">{{_("Read More")}}</a>
+							<small class="text-muted">{{post.read_dur}}</small>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% else %}
+			<p class="my-5">Oops no news posts were found!<br> 
+			This is probably a bug, please report it <a href="https://github.com/Samyar-Projects/Website/issues/new?assignees=samyarsadat&labels=bug+unconfirmed&template=bug_report.md&title=">here</a>.</p>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="text-center mb-5 mt-3 border-light border-1 border bg-white shadow rounded-3 p-3">
+		<div class="d-inline display-6" style="font-size: 30px;">{{_("Views in the past month:")}}</div>
+		<div class="text-primary d-inline display-6" style="font-size: 25px;">{{page_views}}</div>
+	</div>
+</div>
+{% endblock %}

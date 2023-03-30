@@ -1,0 +1,110 @@
+<!-- 
+    Samyar Projects Website blog HTML template file.
+    Copyright 2021-2023 Samyar Sadat Akhavi
+    Written by Samyar Sadat Akhavi, 2022.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+{% cache RENDER_CACHE_TIMEOUT %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include "base_templates/template_modules/head.html" %}
+        {% endcache %}
+
+        {% include "base_templates/template_modules/google_analytics.html" %}
+
+        <!-- Head block -->
+        {% block head %}
+        {% endblock %}
+
+        <!-- Page title block -->
+        <title>{% block title %}{% endblock %} | {{_("Samyar Projects Forum")}}</title>
+
+        {% cache RENDER_CACHE_TIMEOUT %}
+    </head>
+
+    <body class="bg-light">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="{{url_for("forum_pages.index")}}" class="text-decoration-none">
+                        <img src="{{url_for("static", filename="img/logos/sp-logo-transparent.svg")}}" class="pe-2" height="40" alt="Samyar Projects Forum">
+                    </a>
+                    {% endcache %}
+
+                    <div class="d-inline">
+                        <a href="{{url_for("forum_pages.index")}}" class="link-light text-decoration-none fw-bold" style="font-size: 15px;">{{_("FORUM")}}</a>
+                    </div>
+
+                    {% include "base_templates/template_modules/lang_dropdown.html" %}
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto me-4">
+                        <li class="nav-item"><a href="{{url_for("forum_pages.index")}}" class="nav-link">{{_("Home")}}</a></li>
+                        <li class="nav-item"><a href="{{url_for("index")}}" class="nav-link">{{_("Back to SP")}}</a></li>
+                    </ul>
+                    {% include "base_templates/template_modules/user_dropdown.html" %}
+                </div>
+            </div>
+        </nav>
+
+        {% include "base_templates/template_modules/flash_messages.html" %}
+        
+        <!-- Body block -->
+        {% block body %}
+        {% endblock %}
+
+        {% cache RENDER_CACHE_TIMEOUT %}
+        <!-- Footer -->
+        <footer class="d-flex flex-wrap py-3 bg-dark {% block footer %}{% endblock %}">
+            <div class="container">
+                <div class="text-center text-lg-start d-lg-inline d-block">
+                    <a href="{{url_for("forum_pages.index")}}" class="text-decoration-none">
+                        <img src="{{url_for("static", filename="img/logos/sp-symbol-transparent.svg")}}" width="25">
+                    </a>
+                    {% endcache %}
+                        
+                    <span class="text-white ms-2">{{_("Copyright &copy; 2022 Samyar Projects.")}} <a href="{{url_for("privacy_policy")}}" class="ms-1 text-decoration-none d-none d-lg-inline h-color-white">{{_("Privacy Policy")}}</a></span>
+                </div>
+            
+                <div class="float-none d-lg-inline d-block float-lg-end mt-lg-0 mt-3 text-center">
+                    {% include "base_templates/template_modules/social_links.html" %}
+                </div>
+
+                <div class="d-block d-lg-none text-center mt-3">
+                    <a href="{{url_for("privacy_policy")}}" class="text-decoration-none h-color-white">{{_("Privacy Policy")}}</a>
+                </div>
+            </div>
+        </footer>
+
+        {% include "base_templates/template_modules/end.html" %}
+
+        <!-- End block -->
+        {% block end %}
+        {% endblock %}
+
+        <!-- Temporary - Remove when finished -->
+        {% include "base_templates/template_modules/temporary_not_ready_modal.html" %}
+    </body>
+</html>
+
+

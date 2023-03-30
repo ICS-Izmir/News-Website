@@ -1,0 +1,106 @@
+{% extends "base_templates/quiz_base.html" %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block title %}{{_("Quiz Results")}}{% endblock %}
+
+{% block body %}
+<div class="container mt-sm-4 mt-3">
+    {% if info.multiplayer == False %}
+    <h4 class="text-center">{{_("Singleplayer Quiz Results")}}</h4>
+    {% else %}
+    <h4 class="text-center">{{_("Multiplayer Quiz Results")}}</h4>
+    {% endif %}
+
+    <div class="my-5"></div>
+
+    {% for pinfo in info.p_info %}
+    <div class="mt-4" style="font-size: 1.2rem;">
+        <div class="progress mt-3 rounded-3" style="height: 28px;">
+            <div id="{{pinfo.username}}" class="progress-bar progress-bar-striped progress-bar-animated bg-danger shadow-dark" role="progressbar"></div>
+        </div>
+    
+        <div class="text-center mt-2">
+            <label for="{{pinfo.username}}" class="h4 mt-1"><span id="{{pinfo.username}}Text">%0</span></label>
+        </div>
+
+        {% if info.multiplayer == True %}
+        <p class="fw-bold text-primary d-inline">{{_("Player")}} {{loop.index}}:</p><br>
+        {% endif %}
+
+        {% if pinfo.with_account %}
+        {{_("Username:")}} <p class="fw-bold text-danger d-inline">{{pinfo.username}}</p><br>
+        {% endif %}
+        
+        {{_("Right Answers:")}} <p class="fw-bold text-danger d-inline">{{pinfo.right_answ}}</p><br>
+        {{_("Wrong Answers:")}} <p class="fw-bold text-danger d-inline">{{pinfo.wrong_answ}}</p><br>
+    </div>
+
+    <hr class="my-4">
+    {% endfor %}
+
+    <div class="my-4" style="font-size: 1.2rem;">
+        {{_("Date:")}} <p class="fw-bold text-danger d-inline">{{info.date}}</p><br>
+        {{_("Time:")}} <p class="fw-bold text-danger d-inline">{{info.time}}</p>
+
+        <div class="mt-2">
+            {{_("Quiz ID:")}} <p class="fw-bold text-danger d-inline">{{info.q_id}}</p>
+            <p class="barcode">{{info.q_id}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block end %}
+<!-- Confetti library -->
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+
+<script>
+    window.onload = async function () 
+    {
+        {% for pinfo in info.p_info %}
+        bar = document.getElementById("{{pinfo.username}}");
+        display = document.getElementById("{{pinfo.username}}Text");
+
+        percent = {{pinfo.right_answ | int}} / {{info.q_num | int}} * 100;
+
+        for(var i = 0; i <= percent; i++)
+        {
+            if (i == 100)
+            {
+                const jsConfetti = new JSConfetti();
+
+                jsConfetti.addConfetti({
+                    confettiColors: [
+                        "#ff0000", "#fff700", "#0dff00", "#00fff7", "#0800ff", "#ff00ea", "#ff8400",
+                    ],
+                    confettiRadius: 7,
+                    confettiNumber: 800,
+                });
+            }
+
+            if (i == 75)
+            {
+                bar.classList.remove("bg-warning");
+                bar.classList.add("bg-success");
+            }
+
+            if (i == 45)
+            {
+                bar.classList.remove("bg-danger");
+                bar.classList.add("bg-warning");
+            }
+
+            bar.style.width = i + "%";
+            display.textContent = "%" + i; 
+
+            await new Promise(r => setTimeout(r, 35));
+        }
+        {% endfor %}
+    };
+</script>
+{% endblock %}

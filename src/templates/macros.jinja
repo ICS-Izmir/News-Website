@@ -1,0 +1,65 @@
+{#  Samyar Projects Website jinja macros file.                              #}
+{#  Copyright 2021-2023 Samyar Sadat Akhavi                                 #}
+{#  Written by Samyar Sadat Akhavi, 2022.                                   #}
+{#                                                                          #}
+{#  This program is free software: you can redistribute it and/or modify    #}
+{#  it under the terms of the GNU General Public License as published by    #}
+{#  the Free Software Foundation, either version 3 of the License, or       #}
+{#  (at your option) any later version.                                     #}
+{#                                                                          #}
+{#  This program is distributed in the hope that it will be useful,         #}
+{#  but WITHOUT ANY WARRANTY; without even the implied warranty of          #}
+{#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           #}
+{#  GNU General Public License for more details.                            #}
+{#                                                                          #}
+{#  You should have received a copy of the GNU General Public License       #}
+{#  along with this program.  If not, see <https://www.gnu.org/licenses/>.  #}
+
+
+{# Render form field with errors (If any errors exist) #}
+{% macro render_field_with_errors(field, spacing, div_type, l_class) %}
+    <div class="form-{{div_type}} mb-{{spacing}}">
+        {{field(**kwargs) | safe}}
+        {{field.label(class=l_class) | safe}} 
+        
+        {% if field.errors %}
+        <ul class="mt-{{spacing}}">
+        {% for error in field.errors %}
+            <li>{{error}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{# Render form field errors (If any errors exist) #}
+{% macro render_field_errors(field, spacing) %}
+    {% if field and field.errors %}
+    <ul class="mb-{{spacing}}">
+    {% for error in field.errors %}
+        <li>{{error}}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endmacro %}
+
+
+{# Render form field without errors #}
+{% macro render_field(field, div_type) %}
+    <div class="form-{{div_type}}">
+        {{field(**kwargs) | safe}}
+    </div>
+{% endmacro %}
+
+
+{# Render form level errors #}
+{% macro render_form_errors(form, spacing) %} 
+    {% if form.form_errors %}
+    <ul class="mb-{{spacing}}">
+    {% for error in form.form_errors %}
+        <li>{{error}}</li>
+    {% endfor %}
+    </ul>
+    {% endif %} 
+{% endmacro %}
