@@ -1,4 +1,4 @@
-<h1 align="center">The ICS Newspaper Website</h1>
+<h1 align="center">ICS Newspaper Website</h1>
 <p align="center">
   	<a href="https://icsizmir.com/">Live Website</a>
   	<br>
@@ -10,13 +10,14 @@
 	<a href="https://github.com/ICS-Izmir/Newspaper-Website/issues"><img src="https://img.shields.io/github/issues/Samyar-Projects/Website"></a>
 	<br><br>
 </p>
+<br>
 
 ----
 ### Disclaimer: Website is still in development.
 
 <br>
 
-The ICS Newspaper Website,<br>
+ICS Newspaper Website,<br>
 Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
 
 ## How to run localy :
