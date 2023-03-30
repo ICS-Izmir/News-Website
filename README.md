@@ -1,41 +1,32 @@
-<h1 align="center">The Samyar Projects website</h1>
+<h1 align="center">The ICS Newspaper Website</h1>
 <p align="center">
-  	<a href="https://gigawhat.net/discord">Discord</a>
-	  |
-  	<a href="https://gigawhat.net">Website (WIP)</a>
+  	<a href="https://icsizmir.com/">Live Website</a>
   	<br>
 	<br>
-	<a href="https://github.com/Samyar-Projects/Website/actions/workflows/codeql-analysis.yml"><img src="https://github.com/Samyar-Projects/Website/actions/workflows/codeql-analysis.yml/badge.svg"></a>
+	<a href="https://github.com/ICS-Izmir/Newspaper-Website/actions/workflows/codeql-analysis.yml"><img src="https://github.com/ICS-Izmir/Newspaper-Website/actions/workflows/codeql-analysis.yml/badge.svg"></a>
 	|
-	<a href="https://github.com/Samyar-Projects/Website/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/Samyar-Projects/Website?color=blue"></a>
+	<a href="https://github.com/ICS-Izmir/Newspaper-Website/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/Samyar-Projects/Website?color=blue"></a>
 	|
-	<a href="https://github.com/Samyar-Projects/Website/issues"><img src="https://img.shields.io/github/issues/Samyar-Projects/Website"></a>
-	|
-	<a href="https://github.com/SamKirkland/FTP-Deploy-Action"><img src="https://img.shields.io/badge/Deployed With-FTP DEPLOY ACTION-%3CCOLOR%3E?style=flat&color=d00000"></a>
+	<a href="https://github.com/ICS-Izmir/Newspaper-Website/issues"><img src="https://img.shields.io/github/issues/Samyar-Projects/Website"></a>
 	<br><br>
 </p>
 
 ----
 ### Disclaimer: Website is still in development.
-*Note:* **I am taking a break to work on my R.O.S. robot project thus development on all Samyar Projects projects will be paused for a little while. None of Samyar Projects's projects are canceled.**
 
 <br>
 
-The Samyar Projects website,<br>
+The ICS Newspaper Website,<br>
 Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
-
-Live website: https://gigawhat.net/
 
 ## How to run localy :
 1. Install the dependencies that are listed in the `requirements.txt` file.
 2. Add this to your `hosts` file *1:<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `sp-local.stw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `www.sp-local.stw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `quiz.sp-local.stw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `blog.sp-local.stw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `account.sp-local.stw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `api.sp-local.stw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `forum.sp-local.stw`
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `ics-news.ntw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `www.ics-news.ntw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `blog.ics-news.ntw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `account.ics-news.ntw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `api.ics-news.ntw`<br>
 	
 3. In the `config.py` file, change `AppConfig(ProductionConfig)` to `AppConfig(LocalConfig)`
 4. In the `config.py` file, change `ANALYTICS_TAG_ID` to your own Google Analytics G- ID. *2
@@ -48,7 +39,7 @@ Live website: https://gigawhat.net/
 	`MAILJET_API_SECRET = "MAILJET API SECRET"`<br>
 
 8. Run the application with: `python app.py`
-9. Go to: http://sp-local.stw:5000/
+9. Go to: http://ics-news.ntw:5000/
 
 
 <br>
@@ -64,12 +55,7 @@ Note: Python 3.8.12 is recommended.<br>
 <br>
 
 ## Support :
-If you think that you have found a bug please report it <a href="https://github.com/Samyar-Projects/Website/issues">here</a>.
-<br>
-<br>
-
-## Contributing :
-Please take a look at <a href="https://github.com/Samyar-Projects/Website/blob/dev/CONTRIBUTING.md">CONTRIBUTING.md</a> for contributing.
+If you think that you have found a bug please report it <a href="https://github.com/ICS-Izmir/Newspaper-Website/issues">here</a>.
 <br>
 <br>
 
@@ -78,9 +64,8 @@ Please take a look at <a href="https://github.com/Samyar-Projects/Website/blob/d
 | Role           | Name                                                                          |
 | -------------- | ----------------------------------------------------------------------------- |
 | Lead Developer | <a href="https://github.com/samyarsadat">Samyar Sadat Akhavi</a>              |
-| Assets         | Rüzgar Kaya, <a href="https://github.com/samyarsadat">Samyar Sadat Akhavi</a> |
 
 <br>
 <br>
 
-Copyright © 2021-2023 Samyar Sadat Akhavi.
+Copyright © 2023 Samyar Sadat Akhavi.

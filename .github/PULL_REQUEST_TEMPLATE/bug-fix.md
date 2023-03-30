@@ -1,8 +1,8 @@
 <!-- 
     Failure to fill out this template properly may result in your PR being ignored without warning. 
     
-    Samyar Projects Website is licensed under the GNU GPL-v3 license, By contributing to the Samyar Projects Website
-    You agree to license your code under the GNU GPL-v3 license, which can be found here: https://github.com/Samyar-Projects/Website/blob/dev/LICENSE
+    ICS Newspaper Website is licensed under the GNU GPL-v3 license, By contributing to the ICS Newspaper Website
+    You agree to license your code under the GNU GPL-v3 license, which can be found here: https://github.com/ICS-Izmir/Newspaper-Website/blob/main/LICENSE
 -->
 
 
