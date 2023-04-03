@@ -5,7 +5,7 @@
 	<br>
 	<a href="https://github.com/ICS-Izmir/News-Website/actions/workflows/codeql-analysis.yml"><img src="https://github.com/ICS-Izmir/News-Website/actions/workflows/codeql-analysis.yml/badge.svg"></a>
 	|
-	<a href="https://github.com/ICS-Izmir/News-Website/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/ICS-Izmir/News-Website?color=blue"></a>
+	<a href="https://github.com/ICS-Izmir/News-Website/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ICS-Izmir/News-Website?color=blue"></a>
 	|
 	<a href="https://github.com/ICS-Izmir/News-Website/issues"><img src="https://img.shields.io/github/issues/ICS-Izmir/News-Website"></a>
 	<br><br>
