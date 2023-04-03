@@ -25,6 +25,7 @@ This module is not complete.
 
 
 # ------- Libraries and utils -------
+import bleach
 from flask import Blueprint, render_template
 
 
@@ -40,4 +41,4 @@ def index():
 
 @newspaper_pages.route("/view/publication/<date_time>")
 def view_pub(date_time):
-    return {"status": 404, "data": f"Publication [{date_time}] does not exist."}, 404
+    return {"status": 404, "data": f"Publication [{bleach.clean(date_time)}] does not exist."}, 404
