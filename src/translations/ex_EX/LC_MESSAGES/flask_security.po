@@ -1,7 +1,7 @@
 # Turkish (Turkey) translation overrides for Flask-Security.
-# Copyright (C) 2022 Samyar Projects
-# This file is distributed under the same license as the Samyar Projects Website project.
-# Samyar Sadat Akhavi <samyarsadat@gigawhat.net>, 2022.
+# Copyright (C) 2023 Samyar Sadat Akhavi
+# This file is distributed under the same license as the ICS News Website project.
+# Samyar Sadat Akhavi <samyarsadat@gigawhat.net>, 2023.
 #
 msgid ""
 msgstr ""

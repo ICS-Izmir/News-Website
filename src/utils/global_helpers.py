@@ -1,6 +1,6 @@
-#  Samyar Projects Website helper functions.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website global helper functions.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-"""Helper functions file for the Samyar Projects Website.
+"""Global helper functions file for the ICS News Website.
 
 """
+
+

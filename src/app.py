@@ -1,6 +1,6 @@
-#  Samyar Projects Website main application file.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website main application file.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,21 +17,19 @@
 
 
 # ------- Libraries, utils, and modules -------
+import os
 import jinja2
 import werkzeug
-from datetime import timedelta, datetime
 from flask import abort, redirect, render_template, request, session
 from config import AppConfig
 from flask_babel import get_locale
-from init import app, cache, db, babel, log, debug_log
-from modules.quiz import quiz_pages
+from init import app, cache, db, log, debug_log
+from modules.newspaper import newspaper_pages
 from modules.blog import blog_pages
-from modules.forum import forum_pages
 from modules.account import account_pages
 from modules.database import database
 from modules.redirects import redirects
 from modules.api import api
-from utils.models import HomeNews
 from utils.google_analytics import Analytics
 
 
@@ -43,14 +41,14 @@ RENDER_CACHE_TIMEOUT = AppConfig.RENDER_CACHE_TIMEOUT
 # ------- Jinja env global objects -------
 app.jinja_env.globals["get_locale"] = get_locale
 app.jinja_env.globals["SUPPORTED_LANGS"] = SUPPORTED_LANGS
+app.jinja_env.globals["ENABLE_ANALYTICS"] = AppConfig.ENABLE_ANALYTICS
 app.jinja_env.globals["ANALYTICS_TAG_ID"] = AppConfig.ANALYTICS_TAG_ID
 app.jinja_env.globals["RENDER_CACHE_TIMEOUT"] = RENDER_CACHE_TIMEOUT
 
 
 # ------- Blueprint registry -------
-app.register_blueprint(quiz_pages, subdomain="quiz")
 app.register_blueprint(blog_pages, subdomain="blog")
-app.register_blueprint(forum_pages, subdomain="forum")
+app.register_blueprint(newspaper_pages, url_prefix="/newspaper")
 app.register_blueprint(account_pages, subdomain="account")
 app.register_blueprint(api, subdomain="api")
 app.register_blueprint(database)
@@ -66,17 +64,6 @@ def set_lang(lang):
         return redirect(request.referrer)
 
     abort(500)
-
-
-@babel.localeselector
-def get_locale():
-    lang = session.get("lang")
-
-    if lang:
-        return lang
-
-    session["lang"] = request.accept_languages.best_match(SUPPORTED_LANGS)
-    return session.get("lang")
 
 
 # ------- Error handlers -------
@@ -110,6 +97,12 @@ def template_error(error):
 
 # ------- Before request -------
 @app.before_request
+def maintenance_mode():
+    if os.getenv("ENABLE_MAINTENANCE"):
+        abort(503)
+    
+
+@app.before_request
 def remove_www():
     if "://www." in request.url.lower():
         log.info(f"[{request.remote_addr}] Sent a request with [www.]")
@@ -127,21 +120,8 @@ def log_request():
 @app.route("/")
 def index():
     posts = []
-    posts.append(HomeNews("Placeholder post 1", "1980 mins", "img/carousel/placeholder.png", "#"))
-    posts.append(HomeNews("Placeholder post 2", "2001 mins", "img/carousel/placeholder.png", "#"))
-    posts.append(HomeNews("Placeholder post 3", "1963 mins", "img/carousel/placeholder.png", "#"))
-    
-    # Calculate dyn_exp and dyn_age:
-    today = datetime.now()
-    dyn_age = round((today - datetime(2009, 2, 23, 7, 53, 0)).days / 365, 2)
-    dyn_exp = round((today - datetime(2018, 1, 1)).days / 365, 1)
 
-    return render_template("index.html", page_views=Analytics.pageviews_this_month(), posts=posts, dyn_age=dyn_age, dyn_exp=dyn_exp)
-
-
-@app.route("/projects")
-def projects_index():
-    return render_template("projects_index.html")
+    return render_template("index.html", page_views=Analytics.pageviews_this_month(), posts=posts)
 
 
 @app.route("/ban-appeals")
@@ -157,7 +137,6 @@ def privacy_policy():
 # ------- Running the app -------
 if __name__ == "__main__":
     with app.app_context():
-        db.init_app(app)
         db.create_all()
         
     app.run()

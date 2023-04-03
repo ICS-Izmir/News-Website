@@ -1,6 +1,6 @@
-#  Samyar Projects Website temporary data storage module.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website temporary data storage module.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-Temporary data storage module for the Samyar Projects Website.
+Temporary data storage module for the ICS News Website.
 
 Notes
 -----
@@ -35,13 +35,13 @@ from typing import Union
 
 # ------- Global variables -------
 TEMPORARY_FILE_DIR = AppConfig.TEMPORARY_FILE_DIR
-SP_QUIZ_TEMP_FILE = os.path.join(TEMPORARY_FILE_DIR, AppConfig.SP_QUIZ_TEMP_DATA_FILE)
+# SP_QUIZ_TEMP_FILE = os.path.join(TEMPORARY_FILE_DIR, AppConfig.SP_QUIZ_TEMP_DATA_FILE)
 
 
 # ------- Storage models -------
 
 # ---- Singleplayer quiz result storage ----
-class SpQuizResultTemp():
+"""class SpQuizResultTemp():
     right_answ: int
     wrong_answ: int
     quiz_id: int
@@ -104,4 +104,4 @@ class SpQuizResultTemp():
 
         except Exception:
             log.exception("TemporaryDataDeleteException")
-            return False
+            return False"""

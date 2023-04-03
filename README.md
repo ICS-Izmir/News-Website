@@ -1,13 +1,13 @@
-<h1 align="center">ICS Newspaper Website</h1>
+<h1 align="center">ICS News Website</h1>
 <p align="center">
   	<a href="https://icsizmir.com/">Live Website</a>
   	<br>
 	<br>
-	<a href="https://github.com/ICS-Izmir/Newspaper-Website/actions/workflows/codeql-analysis.yml"><img src="https://github.com/ICS-Izmir/Newspaper-Website/actions/workflows/codeql-analysis.yml/badge.svg"></a>
+	<a href="https://github.com/ICS-Izmir/News-Website/actions/workflows/codeql-analysis.yml"><img src="https://github.com/ICS-Izmir/News-Website/actions/workflows/codeql-analysis.yml/badge.svg"></a>
 	|
-	<a href="https://github.com/ICS-Izmir/Newspaper-Website/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/Samyar-Projects/Website?color=blue"></a>
+	<a href="https://github.com/ICS-Izmir/News-Website/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/ICS-Izmir/News-Website?color=blue"></a>
 	|
-	<a href="https://github.com/ICS-Izmir/Newspaper-Website/issues"><img src="https://img.shields.io/github/issues/Samyar-Projects/Website"></a>
+	<a href="https://github.com/ICS-Izmir/News-Website/issues"><img src="https://img.shields.io/github/issues/ICS-Izmir/News-Website"></a>
 	<br><br>
 </p>
 <br>
@@ -17,7 +17,7 @@
 
 <br>
 
-ICS Newspaper Website,<br>
+ICS News Website,<br>
 Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
 
 ## How to run localy :
@@ -56,7 +56,7 @@ Note: Python 3.8.12 is recommended.<br>
 <br>
 
 ## Support :
-If you think that you have found a bug please report it <a href="https://github.com/ICS-Izmir/Newspaper-Website/issues">here</a>.
+If you think that you have found a bug please report it <a href="https://github.com/ICS-Izmir/News-Website/issues">here</a>.
 <br>
 <br>
 

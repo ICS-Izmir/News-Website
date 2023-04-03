@@ -1,6 +1,6 @@
-#  Samyar Projects Website Mailjet mailing API util.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website Mailjet mailing API util.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ class SecurityMailUtil(MailUtil):
                 "From":
                 {
                     "Email": sender,
-                    "Name": "Samyar Projects Account"
+                    "Name": "ICS News Account"
                 },
                     
                 "To":

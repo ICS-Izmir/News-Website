@@ -1,6 +1,6 @@
-#  Samyar Projects Website forum module.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website API module.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-Forum module for the Samyar Projects Website.
+Newspaper module for the ICS News Website.
 
 Notes
 -----
@@ -29,10 +29,15 @@ from flask import Blueprint, render_template
 
 
 # ------- Blueprint init -------
-forum_pages = Blueprint("forum_pages", __name__, template_folder="../templates", static_folder="../static")
+newspaper_pages = Blueprint("newspaper_pages", __name__, template_folder="../templates", static_folder="../static")
 
 
 # ------- Page routes -------
-@forum_pages.route("/")
+@newspaper_pages.route("/")
 def index():
-    return render_template("forum_index.html")
+    return render_template("newspaper_index.html")
+
+
+@newspaper_pages.route("/view/publication/<date_time>")
+def view_pub(date_time):
+    return {"status": 404, "data": f"Publication [{date_time}] does not exist."}, 404

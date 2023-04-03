@@ -1,6 +1,6 @@
-#  Samyar Projects Website database module.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website database module.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-Database module for the Samyar Projects Website.
+Database module for the ICS News Website.
 
 This module contains all of the database models.
 """
@@ -34,36 +34,8 @@ database = Blueprint("database", __name__)
 
 
 # ------- Temporary page route -------
-# @database.route("/quiz-db-add", methods=["GET", "POST"])
-def quiz_db_add():
-    if request.method == "POST":
-        try:
-            q = request.form.get("q")
-            aa = request.form.get("aa")
-            ab = request.form.get("ab")
-            ac = request.form.get("ac")
-            ad = request.form.get("ad")
-            ca = request.form.get("ca")
-            cat = request.form.get("cat")
-            subcat = request.form.get("subcat")
-            diff = request.form.get("diff")
-            lvl = request.form.get("lvl")
-            lang = request.form.get("lang")
-
-            data = QuizQuestions(cat, subcat, lang, lvl, diff, q, ca, aa, ab, ac, ad, True)
-            db.session.add(data)
-            db.session.commit()
-            
-            flash("SUCCESS", "success")
-            return render_template("quiz/db_add.html")
-
-        except Exception as e:
-            log.exception("AddQuizQuestionException")
-            flash(e, "danger")
-            return render_template("quiz/db_add.html")
-
-    else:
-        return render_template("quiz/db_add.html")
+# @database.route("/blog-db-add", methods=["GET", "POST"])
+# @database.route("/newspaper-db-add", methods=["GET", "POST"])
 
 
 # ------- Database models -------
@@ -110,7 +82,7 @@ class User(db.Model, UserMixin):
 
 # -=-=-= Quiz database =-=-=-
 # ---- Quiz question table ----
-class QuizQuestions(db.Model):
+"""class QuizQuestions(db.Model):
     __bind_key__ = "quiz"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -137,26 +109,7 @@ class QuizQuestions(db.Model):
         self.answ_b = answ_b
         self.answ_c = answ_c
         self.answ_d = answ_d
-        self.status = status
-
-
-# ---- Quiz result table ----
-class QuizResults(db.Model):
-    __bind_key__ = "quiz"
-
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(10))
-    time = db.Column(db.String(8))
-    multiplayer = db.Column(db.Boolean)
-    quiz_id = db.Column(db.String(32), unique=True)
-    player_info = db.Column(db.JSON)
-
-    def __init__(self, date: str, time: str, multiplayer: bool, quiz_id: str, player_info):
-        self.date = date
-        self.time = time
-        self.multiplayer = multiplayer
-        self.quiz_id = quiz_id
-        self.player_info = player_info
+        self.status = status"""
 
 
 # ------- Flask-Security user datastore -------

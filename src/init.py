@@ -1,6 +1,6 @@
-#  Samyar Projects Website application init file.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website application init file.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 # ------- Libraries -------
 import logging
 import os
-from flask import Flask
+from flask import Flask, request, session
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
@@ -29,12 +29,25 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from config import AppConfig
 
 
+# -=-=-= Functions =-=-=-
+
+# ---- Custom locale selector for Babel ----
+def localeselector():
+    lang = session.get("lang")
+
+    if lang:
+        return lang
+
+    session["lang"] = request.accept_languages.best_match(AppConfig.SUPPORTED_LANGS)
+    return session.get("lang")
+
+
 # ------- Flask and Flask plug-in init -------
 app = Flask(__name__)
 app.config.from_object(AppConfig)
 cache = Cache(app)
 db = SQLAlchemy(app)
-babel = Babel(app)
+babel = Babel(app, locale_selector=localeselector)
 csrf = CSRFProtect(app)
 mailjet = Client(auth=(AppConfig.MAILJET_API_KEY, AppConfig.MAILJET_API_SECRET), version="v3.1")
 ga = BetaAnalyticsDataClient()

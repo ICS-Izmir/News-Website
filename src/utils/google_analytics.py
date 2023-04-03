@@ -1,6 +1,7 @@
-#  Samyar Projects Website Google Analytics Data API util.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2020 - 2022.
+#  ICS News Website Google Analytics Data API util.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
+#  Original version written by Samyar Sadat Akhavi, 2020.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,19 +36,15 @@ PROPERTY_ID = AppConfig.ANALYTICS_PROPERTY_ID
 
 # -=-=-= Functions =-=-=-
 
-# ---- Get basic analytics data from the API ----
-def get_basic_data(start_date: str, end_date: str, metric: str) -> RunReportResponse:
-    request = RunReportRequest(
-        property = f"properties/{PROPERTY_ID}",
-        metrics = [Metric(name=metric)],
-        date_ranges = [DateRange(start_date=start_date, end_date=end_date)],
-    )
-    
-    debug_log.debug(f"Basic analytics query for metric [{metric}] with date range [{start_date}, {end_date}]")
+# ---- Run report with checks ----
+def run_report_with_checks(request: RunReportRequest) -> RunReportResponse:
+    if AppConfig.ENABLE_ANALYTICS == False:
+        debug_log.debug(f"Analytics requested however 'Analytics' is disabled.")
+        return RunReportResponse()
     
     try:
         return ga.run_report(request)
-    
+
     except ServiceUnavailable:
         log.critical("Requested analytics data from the Google Analytics Data API however the API responded with [503 Service Unavailable]")
         debug_log.debug("Requested analytics data from the Google Analytics Data API however the API responded with [503 Service Unavailable]")
@@ -64,12 +61,24 @@ def get_basic_data(start_date: str, end_date: str, metric: str) -> RunReportResp
         return RunReportResponse()
 
 
+# ---- Get basic analytics data from the API ----
+def get_basic_data(start_date: str, end_date: str, metric: str) -> RunReportResponse:
+    request = RunReportRequest(
+        property = f"properties/{PROPERTY_ID}",
+        metrics = [Metric(name=metric)],
+        date_ranges = [DateRange(start_date=start_date, end_date=end_date)],
+    )
+    
+    debug_log.debug(f"Basic analytics query for metric [{metric}] with date range [{start_date}, {end_date}]")
+    return run_report_with_checks(request)
+    
+
 # ---- Parse usable data from raw basic API response ----
 def parse_basic_response(response: RunReportResponse) -> str:
     if response.rows:
         return str(response.rows[0].metric_values[0].value)
     
-    return "ERROR"
+    return "NO DATA"
 
 
 class Analytics():
@@ -118,4 +127,4 @@ class Analytics():
     # ---- Fully custom API query ----
     def custom_query(request: RunReportRequest) -> RunReportResponse:
         debug_log.debug(f"Fully custom analytics query for metrics [{request.metrics}] with date ranges [{request.date_ranges}]")
-        return ga.run_report(request)
+        return run_report_with_checks(request)

@@ -11,33 +11,33 @@
 	</div>
 	
 	<div class="carousel-inner">
-	    <div class="carousel-item active">
+		<div class="carousel-item active">
 			<img src="{{url_for("static", filename="img/carousel/placeholder2.png")}}">
 
 			<div class="carousel-caption">
-				<h1>{{_("Samyar Projects Forum")}}</h1>
-				<p>{{_("Discuss several topics with other members of the forum.")}}</p>
-				<p><a class="btn btn-md btn-outline-light" href="{{url_for("forum_pages.index")}}">{{_("Go To SP Forum")}}</a></p>
+				<h1>{{_("ICS Newspaper")}}</h1>
+				<p>{{_("A large publication about school-related and non-school-related topics. Published once every 14 days.")}}</p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("newspaper_pages.index")}}">{{_("View Latest Newspaper")}}</a></p>
 			</div>
 	    </div>
-	    
+
 		<div class="carousel-item">
 			<img src="{{url_for("static", filename="img/carousel/placeholder2.png")}}">
 
 			<div class="carousel-caption">
-				<h1>{{_("Samyar Projects Blog")}}</h1>
-				<p>{{_("Learn about the latest changes and project updates.")}}</p>
-				<p><a class="btn btn-md btn-outline-light" href="{{url_for("blog_pages.index")}}">{{_("Go To SP Blog")}}</a></p>
+				<h1>{{_("ICS News Blog")}}</h1>
+				<p>{{_("Small publications about different topics. Published randomly.")}}</p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("blog_pages.index")}}">{{_("Go To ICS Blog")}}</a></p>
 			</div>
 	    </div>
-	    
-		<div class="carousel-item">
+
+	    <div class="carousel-item">
 			<img src="{{url_for("static", filename="img/carousel/placeholder2.png")}}">
 
 			<div class="carousel-caption">
-				<h1>{{_("View All Projects")}}</h1>
-				<p>{{_("View detailed build guides for finished projects or information and updates for ongoing projects.")}}</p>
-				<p><a class="btn btn-md btn-outline-light" href="{{url_for("projects_index")}}">{{_("View Projects")}}</a></p>
+				<h1>{{_("ICS School Updates")}}</h1>
+				<p>{{_("Important news, events, and other updates regarding International Canadian School")}}</p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("index")}}">{{_("Go To School Updates")}}</a></p>
 			</div>
 	    </div>
 	</div>
@@ -52,7 +52,7 @@
 </div>
 
 <div class="bg-dark text-light shadow" id="about">
-	<h1 class="text-center pt-5">{{_("About Samyar Projects")}}</h1>
+	<h1 class="text-center pt-5">{{_("About ICS News")}}</h1>
 
 	<div class="album py-5">
 		<div class="container">
@@ -64,12 +64,10 @@
 				<div class="col">
 					<div class="card-body">
 						<p class="card-text">
-							{{_("Hello there, I'm Samyar. I'm %(dyn_age)s years old and I make electronics, robotics, 
-								and programming projects. This website is where I post all of my projects. I started 
-								programming and working with electronics about %(dyn_exp)s years ago. Since then, 
-								I have worked on (and built) quite a few projects however, most of them aren't on 
-								this website as this website is for my new and future projects. I wrote this website 
-								myself and you can find the source code on GitHub: https://github.com/Samyar-Projects/Website", dyn_age=dyn_age, dyn_exp=dyn_exp)}}
+							{{_("
+								ICS News is a news publication project at İzmir International Canadian School (ICS).
+								All publications are written and edited by ICS students. TODO: Add more to about section.
+								")}}
 						</p>
 					</div>
 				</div>
@@ -99,8 +97,9 @@
 				</div>
 			</div>
 			{% else %}
-			<p class="my-5">Oops no news posts were found!<br> 
-			This is probably a bug, please report it <a href="https://github.com/Samyar-Projects/Website/issues/new?assignees=samyarsadat&labels=bug+unconfirmed&template=bug_report.md&title=">here</a>.</p>
+			<p class="my-5">Oops no posts were found!<br> 
+			This is probably a bug, please report it to: 
+			<a href="mailto:samyarsadat@gigawhat.net">samyarsadat@gigawhat.net</a></p>
 			{% endfor %}
 		</div>
 	</div>

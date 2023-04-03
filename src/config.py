@@ -1,6 +1,6 @@
-#  Samyar Projects Website flask and flask plugin config file.
-#  Copyright 2021-2023 Samyar Sadat Akhavi
-#  Written by Samyar Sadat Akhavi, 2022.
+#  ICS News Website flask and flask plugin config file.
+#  Copyright 2023 Samyar Sadat Akhavi
+#  Written by Samyar Sadat Akhavi, 2023.
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ INSTANCE_DIR = os.path.join(WORKING_DIR, "instance")
 # ------- Config classes -------
 class ProductionConfig():
     # ------- Flask config -------
-    SERVER_NAME = "gigawhat.net"
+    SERVER_NAME = "icsizmir.com"
     SECRET_KEY = os.getenv("FLASK_SECRET_KEY")
     DEBUG = False
 
@@ -49,7 +49,8 @@ class ProductionConfig():
     SQLALCHEMY_DATABASE_URI = "sqlite:///data/database/main.sqlite3"
     SQLALCHEMY_BINDS = {
         "accounts": "sqlite:///data/database/accounts.sqlite3",
-        "quiz": "sqlite:///data/database/quiz.sqlite3"
+        "blog": "sqlite:///data/database/blog.sqlite3",
+        "newspaper": "sqlite:///data/database/newspaper.sqlite3"
     }
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -82,16 +83,14 @@ class ProductionConfig():
     WTF_CSRF_CHECK_DEFAULT = False
 
     # ------- Module configs -------
-    QUIZ_QUESTION_COUNT = 10
-    QUIZ_QUESTION_TIME = 60
     LOG_FILE_PATH = os.path.join(INSTANCE_DIR, "logs")
     LOG_LEVEL = logging.INFO
-    ANALYTICS_TAG_ID = "G-3J818WNF23"
-    ANALYTICS_PROPERTY_ID = "315035421"
+    ENABLE_ANALYTICS = True
+    ANALYTICS_TAG_ID = "G-XXXXXXXXXX"
+    ANALYTICS_PROPERTY_ID = "XXXXXXXXX"
     TEMPORARY_FILE_DIR = os.path.join(INSTANCE_DIR, "data/temporary")
-    SP_QUIZ_TEMP_DATA_FILE = "sp_quiz_result.json"
     RENDER_CACHE_TIMEOUT = 3*60
-    SUPPORTED_LANGS = ["en_US"]
+    SUPPORTED_LANGS = ["en_US", "tr_TR"]
 
 
 class TestingConfig(ProductionConfig):
@@ -99,8 +98,9 @@ class TestingConfig(ProductionConfig):
 
 
 class LocalConfig(ProductionConfig):
-    SERVER_NAME = "sp-local.stw:5000"
+    SERVER_NAME = "ics-news.ntw:5000"
     DEBUG = True
+    ENABLE_ANALYTICS = True
     RENDER_CACHE_TIMEOUT = 1
 
 
@@ -120,16 +120,15 @@ class AppConfig(LocalConfig):
     SECURITY_POST_CHANGE_VIEW = "index"
     
     # ------- Redirect module URL config -------
-    TWITTER_URL = {"en_US": "https://twitter.com/Samyar_Projects"}
+    TWITTER_URL = {"en_US": ""}
     INSTAGRAM_URL = {"en_US": ""}
-    DISCORD_URL = {"en_US": "https://discord.gg/rMq7GujUZJ"}
-    YOUTUBE_URL = {"en_US": "https://www.youtube.com/@samyarprojects"}
+    DISCORD_URL = {"en_US": ""}
+    YOUTUBE_URL = {"en_US": ""}
     PATREON_URL = {"en_US": ""}
-    GITHUB_URL = {"en_US": "https://github.com/Samyar-Projects"}
-    EMAIL_URL = {"en_US": "mailto:samyarsadat@gigawhat.net"}
-    FORUM_BAN_APPEAL_URL = {"en_US": "https://dyno.gg/form/3b2bc888"}
-    DISCORD_BAN_APPEAL_URL = {"en_US": "https://dyno.gg/form/9e854815"}
-    SERVER_SUGGESTIONS_URL = {"en_US": "https://dyno.gg/form/e499415"}
+    GITHUB_URL = {"en_US": "https://github.com/ICS-Izmir"}
+    EMAIL_URL = {"en_US": "mailto:"}
+    DISCORD_BAN_APPEAL_URL = {"en_US": ""}
+    SUGGESTIONS_URL = {"en_US": ""}
     
     # ------- Flask-Security message overrides -------
     SECURITY_MSG_ALREADY_CONFIRMED = ("Your email has already been confirmed.", "info")
