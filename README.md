@@ -52,7 +52,7 @@ Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
 <br>
 *4: To get the Mailjet credentials: Create a Mailjet account, go to 'Account Settings > API Key Management' then create an API key.<br>
 <br>
-Note: Python 3.8.12 is recommended.<br>
+Note: Python 3.11 is recommended.<br>
 <br>
 
 ## Support :
