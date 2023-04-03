@@ -41,7 +41,7 @@ class ProductionConfig():
     DEBUG = False
 
     # ------- Flask-Caching config -------
-    CACHE_DEFAULT_TIMEOUT = 0
+    CACHE_DEFAULT_TIMEOUT = 2*60
     CACHE_TYPE = "FileSystemCache"
     CACHE_DIR = "__pycache__/FLASK_CACHE"
 
@@ -89,7 +89,7 @@ class ProductionConfig():
     ANALYTICS_TAG_ID = "G-XXXXXXXXXX"
     ANALYTICS_PROPERTY_ID = "XXXXXXXXX"
     TEMPORARY_FILE_DIR = os.path.join(INSTANCE_DIR, "data/temporary")
-    RENDER_CACHE_TIMEOUT = 3*60
+    RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
 
 
@@ -101,7 +101,8 @@ class LocalConfig(ProductionConfig):
     SERVER_NAME = "ics-news.ntw:5000"
     DEBUG = True
     ENABLE_ANALYTICS = True
-    RENDER_CACHE_TIMEOUT = 1
+    CACHE_DEFAULT_TIMEOUT = 1
+    RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
 
 
 class AppConfig(LocalConfig):
