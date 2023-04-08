@@ -98,11 +98,11 @@ class TestingConfig(ProductionConfig):
 
 
 class LocalConfig(ProductionConfig):
+    CACHE_DEFAULT_TIMEOUT = 0
+    RENDER_CACHE_TIMEOUT = 0
     SERVER_NAME = "ics-news.ntw:5000"
     DEBUG = True
     ENABLE_ANALYTICS = True
-    CACHE_DEFAULT_TIMEOUT = 1
-    RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
 
 
 class AppConfig(LocalConfig):
@@ -122,12 +122,12 @@ class AppConfig(LocalConfig):
     
     # ------- Redirect module URL config -------
     TWITTER_URL = {"en_US": ""}
-    INSTAGRAM_URL = {"en_US": ""}
+    INSTAGRAM_URL = {"en_US": "https://www.instagram.com/canadianschoolss", "tr_TR": "https://www.instagram.com/canadianschoolss"}
     DISCORD_URL = {"en_US": ""}
     YOUTUBE_URL = {"en_US": ""}
     PATREON_URL = {"en_US": ""}
-    GITHUB_URL = {"en_US": "https://github.com/ICS-Izmir"}
-    EMAIL_URL = {"en_US": "mailto:"}
+    GITHUB_URL = {"en_US": "https://github.com/ICS-Izmir", "tr_TR": "https://github.com/ICS-Izmir"}
+    EMAIL_URL = {"en_US": "mailto:samyarsadat@gigawhat.net", "tr_TR": "mailto:samyarsadat@gigawhat.net"}
     DISCORD_BAN_APPEAL_URL = {"en_US": ""}
     SUGGESTIONS_URL = {"en_US": ""}
     

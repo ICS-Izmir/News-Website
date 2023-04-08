@@ -42,9 +42,13 @@
             <div class="container">
                 <div class="navbar-brand">
                     <a href="{{url_for("index")}}" class="text-decoration-none">
-                        <img src="{{url_for("static", filename="img/logos/sp-logo-transparent.svg")}}" class="pe-2" height="40" alt="ICS News">
+                        <img src="{{url_for("static", filename="img/logos/maple-leaf.png")}}" class="" height="40" alt="ICS News">
                     </a>
                     {% endcache %}
+
+                    <div class="d-inline">
+                        <a href="{{url_for("blog_pages.index")}}" class="link-light text-decoration-none small fw-bold">{{_("ICS News")}}</a>
+                    </div>
 
                     {% include "base_templates/template_modules/lang_dropdown.html" %}
                 </div>
@@ -69,7 +73,7 @@
             <div class="container">
                 <div class="text-center text-lg-start d-lg-inline d-block">
                     <a href="{{url_for("index")}}" class="text-decoration-none">
-                        <img src="{{url_for("static", filename="img/logos/sp-symbol-transparent.svg")}}" width="25">
+                        <img src="{{url_for("static", filename="img/logos/logo-transparent.png")}}" width="30">
                     </a>
                     {% endcache %}
                         
