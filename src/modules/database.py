@@ -80,36 +80,18 @@ class User(db.Model, UserMixin):
     tf_totp_secret = db.Column(db.String(255), nullable=True)
 
 
-# -=-=-= Quiz database =-=-=-
-# ---- Quiz question table ----
-"""class QuizQuestions(db.Model):
-    __bind_key__ = "quiz"
-
+# -=-=-= General database =-=-=-
+# ---- School updates table ----
+class SchoolUpdates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(30))
-    subcategory = db.Column(db.String(50))
-    lang = db.Column(db.String(5))
-    difficulty = db.Column(db.String(15))
-    question = db.Column(db.String(16384), unique=True)
-    correct_answ = db.Column(db.String(1))
-    answ_a = db.Column(db.String(2048))
-    answ_b = db.Column(db.String(2048))
-    answ_c = db.Column(db.String(2048))
-    answ_d = db.Column(db.String(2048))
-    status = db.Column(db.Boolean)
+    title = db.Column(db.String(120), nullable=False)
+    date_time = db.Column(db.String(30))
+    body = db.Column(db.String(4500))
 
-    def __init__(self, category: str, subcategory: str, lang: str, difficulty: str, question: str, correct_answ: str, answ_a: str, answ_b: str, answ_c: str, answ_d: str, status: bool):
-        self.category = category
-        self.subcategory = subcategory
-        self.lang = lang
-        self.difficulty = difficulty
-        self.question = question
-        self.correct_answ = correct_answ
-        self.answ_a = answ_a
-        self.answ_b = answ_b
-        self.answ_c = answ_c
-        self.answ_d = answ_d
-        self.status = status"""
+    def __init__(self, title: str, date_time: str, body: str):
+        self.title = title
+        self.date_time = date_time
+        self.body = body
 
 
 # ------- Flask-Security user datastore -------

@@ -62,7 +62,7 @@ class ProductionConfig():
     SECURITY_PASSWORD_SALT = os.getenv("PASSWORD_ENCRYPT_SALT")
     SECURITY_PASSWORD_COMPLEXITY_CHECKER = "zxcvbn"
     SECURITY_REGISTERABLE = True
-    SECURITY_PASSWORD_BREACHED_COUNT = 3
+    SECURITY_PASSWORD_BREACHED_COUNT = 2
     SECURITY_REDIRECT_ALLOW_SUBDOMAINS = True
     SECURITY_CSRF_IGNORE_UNAUTH_ENDPOINTS = False
     SECURITY_I18N_DIRNAME = ["translations", pkg_resources.resource_filename("flask_security", "translations")]
@@ -128,7 +128,6 @@ class AppConfig(LocalConfig):
     PATREON_URL = {"en_US": ""}
     GITHUB_URL = {"en_US": "https://github.com/ICS-Izmir", "tr_TR": "https://github.com/ICS-Izmir"}
     EMAIL_URL = {"en_US": "mailto:samyarsadat@gigawhat.net", "tr_TR": "mailto:samyarsadat@gigawhat.net"}
-    DISCORD_BAN_APPEAL_URL = {"en_US": ""}
     SUGGESTIONS_URL = {"en_US": ""}
     
     # ------- Flask-Security message overrides -------

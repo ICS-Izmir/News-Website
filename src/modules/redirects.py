@@ -74,12 +74,6 @@ def instagram_redirect():
     return check_url(AppConfig.INSTAGRAM_URL, request)
 
 
-@redirects.route("/dc")
-@redirects.route("/discord")
-def discord_redirect():
-    return check_url(AppConfig.DISCORD_URL, request)
-
-
 @redirects.route("/yt")
 @redirects.route("/youtube")
 def youtube_redirect():
@@ -96,11 +90,6 @@ def github_redirect():
 @redirects.route("/email")
 def email_redirect():
     return check_url(AppConfig.EMAIL_URL, request)
-
-
-@redirects.route("/discord-ban-appeal")
-def discord_ban_appeal_redirect():
-    return check_url(AppConfig.DISCORD_BAN_APPEAL_URL, request)
 
 
 @redirects.route("/suggestions")

@@ -27,7 +27,7 @@ from init import app, cache, db, log, debug_log
 from modules.newspaper import newspaper_pages
 from modules.blog import blog_pages
 from modules.account import account_pages
-from modules.database import database
+from modules.database import SchoolUpdates, database
 from modules.redirects import redirects
 from modules.api import api
 from utils.google_analytics import Analytics
@@ -124,14 +124,15 @@ def index():
     return render_template("index.html", page_views=Analytics.pageviews_this_month(), posts=posts)
 
 
-@app.route("/ban-appeals")
-def ban_appeals():
-    return render_template("ban_appeals.html")
-
-
 @app.route("/privacy-policy")
 def privacy_policy():
     return render_template("privacy_policy.html")
+
+
+@app.route("/school-updates")
+def school_updates():
+    query = db.session.query(SchoolUpdates).limit(40).all()
+    return render_template("updates_index.html", posts=query)
 
 
 # ------- Running the app -------
