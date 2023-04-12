@@ -28,6 +28,7 @@ from modules.newspaper import newspaper_pages
 from modules.blog import blog_pages
 from modules.account import account_pages
 from modules.database import SchoolUpdates, database
+from modules.admin import admin_pages
 from modules.redirects import redirects
 from modules.api import api
 from utils.google_analytics import Analytics
@@ -49,6 +50,7 @@ app.jinja_env.globals["RENDER_CACHE_TIMEOUT"] = RENDER_CACHE_TIMEOUT
 # ------- Blueprint registry -------
 app.register_blueprint(blog_pages, subdomain="blog")
 app.register_blueprint(newspaper_pages, url_prefix="/newspaper")
+app.register_blueprint(admin_pages, subdomain="admin")
 app.register_blueprint(account_pages, subdomain="account")
 app.register_blueprint(api, subdomain="api")
 app.register_blueprint(database)

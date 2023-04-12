@@ -1,4 +1,4 @@
-#  ICS News Website Newspaper module.
+#  ICS News Website admin module.
 #  Copyright 2023 Samyar Sadat Akhavi
 #  Written by Samyar Sadat Akhavi, 2023.
 #
@@ -16,7 +16,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 """
-Newspaper module for the ICS News Website.
+Admin module for the ICS News Website.
 
 Notes
 -----
@@ -25,20 +25,17 @@ This module is not complete.
 
 
 # ------- Libraries and utils -------
-import bleach
+from flask_security import auth_required, roles_required
 from flask import Blueprint, render_template
 
 
 # ------- Blueprint init -------
-newspaper_pages = Blueprint("newspaper_pages", __name__, template_folder="../templates", static_folder="../static")
+admin_pages = Blueprint("admin_pages", __name__, template_folder="../templates", static_folder="../static")
 
 
 # ------- Page routes -------
-@newspaper_pages.route("/")
+@admin_pages.route("/")
+@auth_required()
+@roles_required("publisher", "admin")
 def index():
-    return render_template("newspaper_index.html")
-
-
-@newspaper_pages.route("/view/publication/<date_time>")
-def view_pub(date_time):
-    return {"status": 404, "data": f"Publication [{bleach.clean(date_time)}] does not exist."}, 404
+    return render_template("admin_index.html")

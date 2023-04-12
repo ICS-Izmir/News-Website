@@ -27,6 +27,7 @@ Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
 	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `www.ics-news.ntw`<br>
 	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `blog.ics-news.ntw`<br>
 	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `account.ics-news.ntw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `admin.ics-news.ntw`<br>
 	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `api.ics-news.ntw`<br>
 	
 3. In the `config.py` file, change `AppConfig(ProductionConfig)` to `AppConfig(LocalConfig)`

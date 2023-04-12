@@ -1,0 +1,27 @@
+{% extends "base_templates/admin_base.html" %}
+
+{% block title %}{{_("Admin")}}{% endblock %}
+
+{% block body %}
+<div class="lead">
+    <h1 class="text-center pt-4 mt-2">{{_("Choose an option")}}</h1>
+
+    <div class="container">
+        <p class="text-center">
+            {{_("Select an option to publish content.")}}<br>
+        </p>
+    </div>
+
+    <div class="album py-4">
+        <div class="container">
+            <div class="d-grid gap-2 px-5">
+                <a href="{{url_for("index")}}" class="btn btn-lg btn-outline-primary" role="button">{{_("Newspaper")}}</a>
+                <a href="{{url_for("index")}}" class="btn btn-lg btn-outline-success" role="button">{{_("School Update")}}</a>
+                <a href="{{url_for("index")}}" class="btn btn-lg btn-outline-danger disabled" role="button">{{_("Blog Post")}}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}fixed-bottom{% endblock %}
