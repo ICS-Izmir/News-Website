@@ -21,6 +21,7 @@ import os
 import jinja2
 import werkzeug
 from flask import abort, redirect, render_template, request, session
+from flask_security import auth_required, roles_accepted
 from config import AppConfig
 from flask_babel import get_locale
 from init import app, cache, db, log, debug_log
@@ -132,6 +133,8 @@ def privacy_policy():
 
 
 @app.route("/school-updates")
+@auth_required()
+@roles_accepted("student", "teacher")
 def school_updates():
     query = db.session.query(SchoolUpdates).limit(40).all()
     return render_template("updates_index.html", posts=query)

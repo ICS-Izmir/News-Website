@@ -3,5 +3,29 @@
 {% block title %}{{_("Home")}}{% endblock %}
 
 {% block body %}
-<h2 class="m-5 text-center">{{_("WIP")}}</h2>
+<div class="container">
+    <h2 class="m-5 text-center">{{_("Latest Publication")}}</h2>
+
+    <object data="{{url_for("newspaper_pages.download_pub", date_time=latest_pub)}}#toolbar=0&navpanes=0" type="application/pdf" class="w-100 rounded rounded-4 mb-2" height="600px">
+        <p class="text-center m-0">{{_("Unable to display PDF.")}} <a href="{{url_for("newspaper_pages.download_pub", date_time=latest_pub)}}">{{_("Download instead.")}}</a></p>
+    </object>
+    <a href="{{url_for("newspaper_pages.view_pub", date_time=latest_pub)}}" class="d-lg-block d-none">{{_("View full-screen")}}</a>
+
+    <hr class="mt-5">
+    <h3 class="mb-3 mt-4 ms-lg-3 ms-0">{{_("Archive:")}}</h3>
+
+    <ul class="ms-lg-4 ms-0 mb-5">
+        {% for item in archive_list %}
+        <li><a href="{{url_for("newspaper_pages.view_pub", date_time=item.file_dt)}}">No. {{loop.index}} - Date: {{item.date}}</a></li>
+        {% else %}
+        <p class="my-5">Oops no archived publications were found!<br> 
+		This is probably a bug, please report it to: 
+		<a href="mailto:samyarsadat@gigawhat.net">samyarsadat@gigawhat.net</a></p>
+        {% endfor %}
+    </ul>
+
+    <div class="d-lg-block d-none m-5">ㅤ</div>
+</div>
 {% endblock %}
+
+{% block footer %}fixed-bottom{% endblock %}

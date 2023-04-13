@@ -26,7 +26,9 @@ This module is not complete.
 
 # ------- Libraries and utils -------
 import bleach
-from flask import Blueprint, render_template
+from flask import Blueprint, abort, redirect, render_template, url_for
+from flask_babel import get_locale
+import werkzeug
 
 
 # ------- Blueprint init -------
@@ -36,9 +38,15 @@ newspaper_pages = Blueprint("newspaper_pages", __name__, template_folder="../tem
 # ------- Page routes -------
 @newspaper_pages.route("/")
 def index():
-    return render_template("newspaper_index.html")
+    return render_template("newspaper_index.html", latest_pub="test", archive_list=[{"date": "13/04/2023", "file_dt": "test"}, {"date": "13/05/2023", "file_dt": "test"}, {"date": "13/06/2023", "file_dt": "test"}, {"date": "13/07/2023", "file_dt": "test"}])
+
+
+@newspaper_pages.route("/download/publication/<date_time>")
+def download_pub(date_time):
+    locale = str(get_locale())
+    return redirect(url_for("static", filename=f"user-uploaded/newspaper/pdf/{locale}/pub_{bleach.clean(date_time)}.pdf"))
 
 
 @newspaper_pages.route("/view/publication/<date_time>")
 def view_pub(date_time):
-    return {"status": 404, "data": f"Publication [{bleach.clean(date_time)}] does not exist."}, 404
+    return redirect(url_for(".download_pub", date_time=date_time))
