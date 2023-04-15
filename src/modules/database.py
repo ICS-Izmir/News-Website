@@ -84,7 +84,7 @@ class User(db.Model, UserMixin):
 # ---- School updates table ----
 class SchoolUpdates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), nullable=False)
+    title = db.Column(db.String(120))
     date_time = db.Column(db.String(30))
     body = db.Column(db.String(4500))
 
@@ -92,6 +92,40 @@ class SchoolUpdates(db.Model):
         self.title = title
         self.date_time = date_time
         self.body = body
+
+
+# ---- School updates table ----
+class Newspaper(db.Model):
+    __bind_key__ = "newspaper"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    file_datetime = db.Column(db.String(120))
+    date_time = db.Column(db.String(30))
+    credits = db.Column(db.String(2500))
+
+    def __init__(self, file_datetime: str, date_time: str, credits: str):
+        self.file_datetime = file_datetime
+        self.date_time = date_time
+        self.credits = credits
+        
+        
+# ---- School updates table ----
+class Blog(db.Model):
+    __bind_key__ = "blog"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
+    date_time = db.Column(db.String(30))
+    authors = db.Column(db.String(400))
+    category = db.Column(db.String(35))
+    body_html = db.Column(db.String(20000))
+
+    def __init__(self, title: str, date_time: str, authors: str, category: str, body_html: str):
+        self.title = title
+        self.date_time = date_time
+        self.authors = authors
+        self.category = category
+        self.body_html = body_html
 
 
 # ------- Flask-Security user datastore -------
