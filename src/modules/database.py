@@ -94,38 +94,59 @@ class SchoolUpdates(db.Model):
         self.body = body
 
 
-# ---- School updates table ----
+# ---- Newspaper table ----
 class Newspaper(db.Model):
     __bind_key__ = "newspaper"
     
     id = db.Column(db.Integer, primary_key=True)
     file_datetime = db.Column(db.String(120))
-    date_time = db.Column(db.String(30))
+    date = db.Column(db.String(30))
     credits = db.Column(db.String(2500))
 
-    def __init__(self, file_datetime: str, date_time: str, credits: str):
+    def __init__(self, file_datetime: str, date: str, credits: str):
         self.file_datetime = file_datetime
-        self.date_time = date_time
+        self.date = date
         self.credits = credits
         
         
-# ---- School updates table ----
+# ---- Blog table ----
 class Blog(db.Model):
     __bind_key__ = "blog"
     
     id = db.Column(db.Integer, primary_key=True)
+    source = db.Column(db.String(20))
+    img_url = db.Column(db.String(150))
     title = db.Column(db.String(200))
     date_time = db.Column(db.String(30))
     authors = db.Column(db.String(400))
     category = db.Column(db.String(35))
     body_html = db.Column(db.String(20000))
 
-    def __init__(self, title: str, date_time: str, authors: str, category: str, body_html: str):
+    def __init__(self, source: str, img_url: str, title: str, date_time: str, authors: str, category: str, body_html: str):
+        self.source = source
+        self.img_url = img_url
         self.title = title
         self.date_time = date_time
         self.authors = authors
         self.category = category
         self.body_html = body_html
+
+
+# ---- Latest posts table ----
+class LatestPosts(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    source = db.Column(db.String(30))
+    title = db.Column(db.String(200))
+    img_url = db.Column(db.String(150))
+    url = db.Column(db.String(150))
+    date = db.Column(db.String(30))
+
+    def __init__(self, source: str, title: str, img_url: str, url: str, date: str):
+        self.source = source
+        self.title = title
+        self.img_url = img_url
+        self.url = url
+        self.date = date
 
 
 # ------- Flask-Security user datastore -------

@@ -10,6 +10,11 @@
         <li><a href="{{url_for("account_pages.account_profile")}}" class="dropdown-item"><i class="bi bi-person pe-2"></i>{{_("Profile")}}</a></li>
         <li><a href="{{url_for("account_pages.account_settings")}}" class="dropdown-item"><i class="bi bi-gear pe-2"></i>{{_("Settings")}}</a></li>
         <li><hr class="dropdown-divider bg-light bg-opacity-25"></li>
+
+        {% if current_user.has_role("admin") %}
+        <li><a href="{{url_for("admin_pages.index")}}" class="dropdown-item text-info"><i class="bi bi-command pe-2"></i>{{_("Admin Panel")}}</a></li>
+        {% endif %}
+
         <li><a href="{{url_for_security("logout")}}" class="dropdown-item text-warning"><i class="bi bi-box-arrow-left pe-2"></i>{{_("Logout")}}</a></li>
     </ul>
 </div>

@@ -27,7 +27,7 @@
 			<div class="carousel-caption">
 				<h1>{{_("ICS News Blog")}}</h1>
 				<p>{{_("Small publications about different topics. Published randomly.")}}</p>
-				<p><a class="btn btn-md btn-outline-light" href="{{url_for("blog_pages.index")}}">{{_("Go To ICS Blog")}}</a></p>
+				<p><a class="btn btn-md btn-outline-light" href="{{url_for("blog_pages.index", source="news")}}">{{_("Go To ICS Blog")}}</a></p>
 			</div>
 	    </div>
 
@@ -79,17 +79,17 @@
 <div class="album pb-sm-5 pt-4 pb-4">
 	<div class="container">
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-			{% for post in posts %}
+			{% for post in latest_posts %}
 			<div class="col">
 				<div class="card shadow">
-					<img class="card-img-top w-100" src="{{url_for("static", filename=post.thumb_url)}}">
+					<img class="card-img-top w-100" src="{{url_for("static", filename=post.img_url)}}">
 
 					<div class="card-body">
 						<p class="card-text">{{post.title}}</p>
 							
 						<div class="d-flex justify-content-between align-items-center">
 							<a href="{{post.url}}" class="btn btn-sm btn-outline-secondary">{{_("Read More")}}</a>
-							<small class="text-muted">{{post.read_dur}}</small>
+							<small class="text-muted">{{post.date}}</small>
 						</div>
 					</div>
 				</div>

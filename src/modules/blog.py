@@ -25,7 +25,7 @@ This module is not complete.
 
 
 # ------- Libraries and utils -------
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, request, url_for
 
 
 # ------- Blueprint init -------
@@ -35,4 +35,15 @@ blog_pages = Blueprint("blog_pages", __name__, template_folder="../templates", s
 # ------- Page routes -------
 @blog_pages.route("/")
 def index():
+    source = request.args.get("source")
     return render_template("blog_index.html")
+
+
+@blog_pages.route("/school-blog")
+def school_blog():
+    return redirect(url_for(".index", source="school"))
+
+
+@blog_pages.route("/news-blog")
+def news_blog():
+    return redirect(url_for(".index", source="news"))

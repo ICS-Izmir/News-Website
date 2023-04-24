@@ -26,9 +26,10 @@ This module is not complete.
 
 # ------- Libraries and utils -------
 import bleach
-from flask import Blueprint, abort, redirect, render_template, url_for
+from init import db
+from flask import Blueprint, abort, redirect, render_template, send_from_directory, url_for
 from flask_babel import get_locale
-import werkzeug
+from modules.database import Newspaper
 
 
 # ------- Blueprint init -------
@@ -38,15 +39,25 @@ newspaper_pages = Blueprint("newspaper_pages", __name__, template_folder="../tem
 # ------- Page routes -------
 @newspaper_pages.route("/")
 def index():
-    return render_template("newspaper_index.html", latest_pub="test", archive_list=[{"date": "13/04/2023", "file_dt": "test"}, {"date": "13/05/2023", "file_dt": "test"}, {"date": "13/06/2023", "file_dt": "test"}, {"date": "13/07/2023", "file_dt": "test"}])
+    query = db.session.query(Newspaper).limit(8).all()
+    query.reverse()
+    return render_template("newspaper_index.html", archive_list=query)
+
+
+@newspaper_pages.route("/view/archive")
+def view_archive():
+    query = db.session.query(Newspaper).all()
+    query.reverse()
+    return render_template("newspaper/archive.html", archive_list=query)
 
 
 @newspaper_pages.route("/download/publication/<date_time>")
 def download_pub(date_time):
     locale = str(get_locale())
-    return redirect(url_for("static", filename=f"user-uploaded/newspaper/pdf/{locale}/pub_{bleach.clean(date_time)}.pdf"))
+    return send_from_directory("static/user-uploaded/newspaper/pdf/", f"{locale}/pub_{bleach.clean(date_time)}.pdf")
 
 
 @newspaper_pages.route("/view/publication/<date_time>")
 def view_pub(date_time):
-    return redirect(url_for(".download_pub", date_time=date_time))
+    locale = str(get_locale())
+    return redirect(url_for("static", filename=f"user-uploaded/newspaper/pdf/{locale}/pub_{bleach.clean(date_time)}.pdf"))

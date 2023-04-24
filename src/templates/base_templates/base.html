@@ -31,7 +31,7 @@
         {% endblock %}
 
         <!-- Page title block -->
-        <title>{% block title %}{% endblock %} | {{_("ICS News")}}</title>
+        <title>{% block title %}{% endblock %} | {{WEBSITE_DISPLAY_NAME}}</title>
 
         {% cache RENDER_CACHE_TIMEOUT %}
     </head>
@@ -42,12 +42,12 @@
             <div class="container">
                 <div class="navbar-brand">
                     <a href="{{url_for("index")}}" class="text-decoration-none">
-                        <img src="{{url_for("static", filename="img/logos/maple-leaf.png")}}" class="" height="40" alt="ICS News">
+                        <img src="{{url_for("static", filename=WEBSITE_NAV_LOGO)}}" class="" height="40" alt="{{WEBSITE_DISPLAY_NAME}}">
                     </a>
                     {% endcache %}
 
                     <div class="d-inline">
-                        <a href="{{url_for("blog_pages.index")}}" class="link-light text-decoration-none small fw-bold">{{_("ICS News")}}</a>
+                        <a href="{{url_for("index")}}" class="link-light text-decoration-none small fw-bold">{{WEBSITE_DISPLAY_NAME}}</a>
                     </div>
 
                     {% include "base_templates/template_modules/lang_dropdown.html" %}
@@ -73,7 +73,7 @@
             <div class="container">
                 <div class="text-center text-lg-start d-lg-inline d-block">
                     <a href="{{url_for("index")}}" class="text-decoration-none">
-                        <img src="{{url_for("static", filename="img/logos/logo-transparent.png")}}" width="30">
+                        <img src="{{url_for("static", filename=WEBSITE_FOOTER_LOGO)}}" width="30">
                     </a>
                     {% endcache %}
                         

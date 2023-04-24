@@ -90,6 +90,8 @@ class ProductionConfig():
     ANALYTICS_PROPERTY_ID = "XXXXXXXXX"
     TEMPORARY_FILE_DIR = os.path.join(INSTANCE_DIR, "data/temporary")
     RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
+    UPLOAD_FOLDER = "/static/user-upload"
+    ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
 
 
@@ -106,6 +108,11 @@ class LocalConfig(ProductionConfig):
 
 
 class AppConfig(LocalConfig):
+    # ------- Website config -------
+    WEBSITE_DISPLAY_NAME = "ICS İzmir"
+    WEBSITE_NAV_LOGO = "img/logos/maple-leaf.png"
+    WEBSITE_FOOTER_LOGO = "img/logos/maple-leaf.png"
+    
     # ------- Flask-Security config -------
     SECURITY_CHANGE_URL = "/change-pass"
     SECURITY_RESET_URL = "/reset-pass"

@@ -28,7 +28,7 @@ from init import app, cache, db, log, debug_log
 from modules.newspaper import newspaper_pages
 from modules.blog import blog_pages
 from modules.account import account_pages
-from modules.database import SchoolUpdates, database
+from modules.database import LatestPosts, SchoolUpdates, database
 from modules.admin import admin_pages
 from modules.redirects import redirects
 from modules.api import api
@@ -46,6 +46,9 @@ app.jinja_env.globals["SUPPORTED_LANGS"] = SUPPORTED_LANGS
 app.jinja_env.globals["ENABLE_ANALYTICS"] = AppConfig.ENABLE_ANALYTICS
 app.jinja_env.globals["ANALYTICS_TAG_ID"] = AppConfig.ANALYTICS_TAG_ID
 app.jinja_env.globals["RENDER_CACHE_TIMEOUT"] = RENDER_CACHE_TIMEOUT
+app.jinja_env.globals["WEBSITE_DISPLAY_NAME"] = AppConfig.WEBSITE_DISPLAY_NAME
+app.jinja_env.globals["WEBSITE_FOOTER_LOGO"] = AppConfig.WEBSITE_FOOTER_LOGO
+app.jinja_env.globals["WEBSITE_NAV_LOGO"] = AppConfig.WEBSITE_NAV_LOGO
 
 
 # ------- Blueprint registry -------
@@ -122,9 +125,9 @@ def log_request():
 # ------- Page routes -------
 @app.route("/")
 def index():
-    posts = []
-
-    return render_template("index.html", page_views=Analytics.pageviews_this_month(), posts=posts)
+    latest_posts = db.session.query(LatestPosts).all()
+    latest_posts.reverse()
+    return render_template("index.html", page_views=Analytics.pageviews_this_month(), latest_posts=latest_posts)
 
 
 @app.route("/privacy-policy")

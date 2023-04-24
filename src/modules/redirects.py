@@ -38,7 +38,7 @@ redirects = Blueprint("redirects", __name__, static_folder="../static")
 def check_url(conf_var: dict, req: Request):
     conf_var = conf_var[str(get_locale())]
     
-    if conf_var:
+    if conf_var != "":
         return redirect(conf_var)
     
     log.error(f"[{req.remote_addr}] Failed to load URL for [{req.url}] redirect with language [{str(get_locale())}]")

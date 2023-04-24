@@ -68,5 +68,5 @@ def get_logger(name, log_file, level):
     return logger
 
 
-log = get_logger("main", "SPApp_MainPyLog.log", AppConfig.LOG_LEVEL)
-debug_log = get_logger("debug", "SPApp_DebugPyLog.log", logging.DEBUG)
+log = get_logger("main", "INPApp_MainPyLog.log", AppConfig.LOG_LEVEL)
+debug_log = get_logger("debug", "INPApp_DebugPyLog.log", logging.DEBUG)

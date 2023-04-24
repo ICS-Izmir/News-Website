@@ -4,27 +4,37 @@
 
 {% block body %}
 <div class="container">
-    <h2 class="m-5 text-center">{{_("Latest Publication")}}</h2>
+    <h2 class="m-5 mt-4 fw-bold text-center">{{_("Latest Publication")}}</h2>
 
-    <object data="{{url_for("newspaper_pages.download_pub", date_time=latest_pub)}}#toolbar=0&navpanes=0" type="application/pdf" class="w-100 rounded rounded-4 mb-2" height="600px">
-        <p class="text-center m-0">{{_("Unable to display PDF.")}} <a href="{{url_for("newspaper_pages.download_pub", date_time=latest_pub)}}">{{_("Download instead.")}}</a></p>
+    {% if archive_list[0] %}
+    <object data="{{url_for("newspaper_pages.download_pub", date_time=archive_list[0].file_datetime)}}#toolbar=0&navpanes=0" type="application/pdf" class="w-100 rounded rounded-4 mb-2" height="600px">
+        <p class="text-center m-0">{{_("Unable to display PDF.")}} <a href="{{url_for("newspaper_pages.download_pub", date_time=archive_list[0].file_datetime)}}">{{_("Download instead.")}}</a></p>
     </object>
-    <a href="{{url_for("newspaper_pages.view_pub", date_time=latest_pub)}}" class="d-lg-block d-none">{{_("View full-screen")}}</a>
+    <a href="{{url_for("newspaper_pages.view_pub", date_time=archive_list[0].file_datetime)}}" class="d-lg-block d-none">{{_("View full-screen")}}</a>
+    
+    <h5 class="mt-5">{{_("Credits:")}}</h5>
+    <p class="font-monospace">{{archive_list[0].credits}}<br>
+    {% else %}
+    <p class="my-5">Oops no publications were found!<br> 
+	This is probably a bug, please report it to: 
+	<a href="mailto:samyarsadat@gigawhat.net">samyarsadat@gigawhat.net</a></p>
+    {% endif %}
 
     <hr class="mt-5">
     <h3 class="mb-3 mt-4 ms-lg-3 ms-0">{{_("Archive:")}}</h3>
-
-    <ul class="ms-lg-4 ms-0 mb-5">
+    <ul class="ms-lg-4 ms-0">
         {% for item in archive_list %}
-        <li><a href="{{url_for("newspaper_pages.view_pub", date_time=item.file_dt)}}">No. {{loop.index}} - Date: {{item.date}}</a></li>
+        <li><a href="{{url_for("newspaper_pages.view_pub", date_time=item.file_datetime)}}">No. {{item.id}} - Date: {{item.date}}</a></li>
         {% else %}
         <p class="my-5">Oops no archived publications were found!<br> 
 		This is probably a bug, please report it to: 
 		<a href="mailto:samyarsadat@gigawhat.net">samyarsadat@gigawhat.net</a></p>
         {% endfor %}
     </ul>
+    <a href="{{url_for("newspaper_pages.view_archive")}}" class="mb-5">{{_("View entire archive")}}</a>
 
-    <div class="d-lg-block d-none m-5">ㅤ</div>
+    <div class="m-5">ㅤ</div>
+    <div class="d-lg-none d-block m-4">ㅤ</div>
 </div>
 {% endblock %}
 

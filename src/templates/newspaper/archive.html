@@ -1,0 +1,31 @@
+{% extends "base_templates/newspaper_base.html" %}
+
+{% block title %}{{_("Newspaper Archive")}}{% endblock %}
+
+{% block body %}
+<div class="container mb-5">
+    <h2 class="text-center fw-bold m-5">{{_("Newspaper Archive")}}</h2>
+
+
+        <ul class="list-group list-group-horizontal w-100">
+            <li class="list-group-item list-group-item-action bg-secondary text-light rounded-0">{{_("Date Published")}}</li>
+            <li class="list-group-item list-group-item-action bg-secondary text-light rounded-0">{{_("File Datetime")}}</li>
+            <li class="list-group-item list-group-item-action bg-secondary text-light rounded-0">{{_("Publication No.")}}</li>
+        </ul>
+        
+        {% for pub in archive_list %}
+            <a href="{{url_for("newspaper_pages.view_pub", date_time=pub.file_datetime)}}" class="text-decoration-none">
+                <ul class="list-group list-group-horizontal w-100">
+                    <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>{{pub.date}}</strong></li>
+                    <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>{{pub.file_datetime}}</strong></li>
+                    <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>#{{pub.id}}</strong></li>
+                </ul>
+            </a>
+        {% else %}
+            <li class="list-group-item bg-danger text-light">{{_("Archive is empty.")}}</li>
+        {% endfor %}
+
+</div>
+{% endblock %}
+
+{% block footer %}{% if files | length < 17 %}fixed-bottom{% endif %}{% endblock %}

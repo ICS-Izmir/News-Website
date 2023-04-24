@@ -1,0 +1,37 @@
+{% extends "base_templates/admin_base.html" %}
+
+{% block title %}{{_("Publish Newspaper")}}{% endblock %}
+
+{% block body %} 
+<div class="container pt-2">
+    <div class="p-sm-5 p-2">
+        <h2 class="fw-bold mb-0">{{_("Publish Newspaper")}}</h2>
+    </div>
+            
+    <div class="p-sm-5 p-2 pt-sm-0">
+        <form action="{{url_for("admin_pages.publish_newspaper")}}" method="POST" enctype="multipart/form-data">
+            <div class="form-floating mb-4">
+                <textarea name="credits" class="form-control rounded-3" rows="4" id="credits" required></textarea>
+                <label for="credits">{{_("Credits")}}</label>
+            </div>
+
+            {% for lang in SUPPORTED_LANGS %}
+            {% set proc_lang = lang | truncate(2, True, "", 0) %}
+            <div class="mb-4">
+                <label class="mb-2 fw-bold" for="file_{{proc_lang | lower}}">{{_("Upload Newspaper File")}} ({{proc_lang | upper}})</label>
+                <input name="file_{{proc_lang | lower}}" type="file" class="form-control rounded-3" id="file_{{proc_lang | lower}}" accept=".pdf" required>
+            </div>
+            {% endfor %}
+
+            <div class="mb-5"></div>
+            
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-outline-danger" type="submit">{{_("Publish")}}</button>
+        </form>
+    </div>
+
+    <div class="p-sm-3 p-4 m-3"></div>
+</div>
+{% endblock %}
+
+{% block footer %}fixed-bottom{% endblock %}
