@@ -90,9 +90,11 @@ class ProductionConfig():
     ANALYTICS_PROPERTY_ID = "XXXXXXXXX"
     TEMPORARY_FILE_DIR = os.path.join(INSTANCE_DIR, "data/temporary")
     RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
-    UPLOAD_FOLDER = "/static/user-upload"
+    UPLOAD_FOLDER = os.path.join(WORKING_DIR, "static/user-uploaded")
     ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
+    NEWSPAPER_POSTS_DEFAULT_IMG = "img/carousel/placeholder3.png"
+    NEWSPAPER_POSTS_TITLE_FORMAT = "Newspaper {date}"
 
 
 class TestingConfig(ProductionConfig):
@@ -112,6 +114,7 @@ class AppConfig(LocalConfig):
     WEBSITE_DISPLAY_NAME = "ICS İzmir"
     WEBSITE_NAV_LOGO = "img/logos/maple-leaf.png"
     WEBSITE_FOOTER_LOGO = "img/logos/maple-leaf.png"
+    WEBSITE_FAVICON = "img/logos/maple-leaf.png"
     
     # ------- Flask-Security config -------
     SECURITY_CHANGE_URL = "/change-pass"

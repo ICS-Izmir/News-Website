@@ -26,11 +26,14 @@ This module is not complete.
 
 # ------- Libraries and utils -------
 import os
+from datetime import datetime
 from config import AppConfig
 from flask_security import auth_required, roles_required
 from flask_babel import gettext
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from modules.database import LatestPosts, Newspaper
 from werkzeug.utils import secure_filename
+from init import db
 
 
 # ------- Blueprint init -------
@@ -39,7 +42,7 @@ admin_pages = Blueprint("admin_pages", __name__, template_folder="../templates",
 
 # ------- Functions -------
 def ext_allowed(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in AppConfig.ALLOWED_EXTENSIONS
+    return ("." in filename) and (filename.rsplit(".", 1)[1].lower() in AppConfig.ALLOWED_EXTENSIONS)
 
 
 # ------- Page routes -------
@@ -55,7 +58,11 @@ def index():
 @roles_required("publisher", "admin")
 def publish_newspaper():
     if request.method == "POST":
-        files = request.files
+        files = []
+        
+        for lang in AppConfig.SUPPORTED_LANGS:
+            files.append(request.files.get(f"file_{lang}"))
+        
         credits = request.form.get("credits")
         
         for file in files:
@@ -67,10 +74,22 @@ def publish_newspaper():
             flash(gettext("Invalid input!"), "danger")
             return redirect(url_for(".publish_newspaper"))
         
-        for file in files:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(AppConfig.UPLOAD_FOLDER, "newspaper/pdf/en_US", filename))
-            return redirect(url_for("download_file", name=filename))
+        date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = secure_filename(f"pub_{date_time}.pdf")
+        
+        for i, file in enumerate(files):
+            file.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename))
+            
+        date = datetime.now().strftime("%d/%m/%Y")
+        newspaper_db = Newspaper(date_time, date, credits)
+        latest_posts_db = LatestPosts("newspaper", AppConfig.NEWSPAPER_POSTS_TITLE_FORMAT.format(date=date), AppConfig.NEWSPAPER_POSTS_DEFAULT_IMG, url_for("newspaper_pages.index"), date)
+        
+        db.session.add(newspaper_db)
+        db.session.add(latest_posts_db)
+        db.session.commit()
+        
+        flash(gettext("Successfully published newspaper!"), "success")
+        return redirect(url_for(".publish_newspaper"))
         
     else:
         return render_template("admin/publish_newspaper.html")

@@ -18,8 +18,8 @@
             {% for lang in SUPPORTED_LANGS %}
             {% set proc_lang = lang | truncate(2, True, "", 0) %}
             <div class="mb-4">
-                <label class="mb-2 fw-bold" for="file_{{proc_lang | lower}}">{{_("Upload Newspaper File")}} ({{proc_lang | upper}})</label>
-                <input name="file_{{proc_lang | lower}}" type="file" class="form-control rounded-3" id="file_{{proc_lang | lower}}" accept=".pdf" required>
+                <label class="mb-2 fw-bold" for="file_{{SUPPORTED_LANGS[loop.index - 1]}}">{{_("Upload Newspaper File")}} ({{proc_lang | upper}})</label>
+                <input name="file_{{SUPPORTED_LANGS[loop.index - 1]}}" type="file" class="form-control rounded-3" id="file_{{SUPPORTED_LANGS[loop.index - 1]}}" accept=".pdf" required>
             </div>
             {% endfor %}
 

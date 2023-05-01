@@ -21,7 +21,7 @@ import os
 import jinja2
 import werkzeug
 from flask import abort, redirect, render_template, request, session
-from flask_security import auth_required, roles_accepted
+from flask_security import auth_required, roles_accepted, current_user
 from config import AppConfig
 from flask_babel import get_locale
 from init import app, cache, db, log, debug_log
@@ -49,6 +49,7 @@ app.jinja_env.globals["RENDER_CACHE_TIMEOUT"] = RENDER_CACHE_TIMEOUT
 app.jinja_env.globals["WEBSITE_DISPLAY_NAME"] = AppConfig.WEBSITE_DISPLAY_NAME
 app.jinja_env.globals["WEBSITE_FOOTER_LOGO"] = AppConfig.WEBSITE_FOOTER_LOGO
 app.jinja_env.globals["WEBSITE_NAV_LOGO"] = AppConfig.WEBSITE_NAV_LOGO
+app.jinja_env.globals["WEBSITE_FAVICON"] = AppConfig.WEBSITE_FAVICON
 
 
 # ------- Blueprint registry -------
@@ -104,7 +105,7 @@ def template_error(error):
 # ------- Before request -------
 @app.before_request
 def maintenance_mode():
-    if os.getenv("ENABLE_MAINTENANCE"):
+    if (os.getenv("ENABLE_MAINTENANCE") == "True") and (not request.host.startswith("account.")) and (not (current_user.is_authenticated and current_user.has_role("admin"))) and (not request.path.startswith("/static/")):
         abort(503)
     
 

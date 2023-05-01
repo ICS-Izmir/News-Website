@@ -52,7 +52,7 @@
 </div>
 
 <div class="bg-dark text-light shadow" id="about">
-	<h1 class="text-center pt-5">{{_("About ICS News")}}</h1>
+	<h1 class="text-center pt-5">{{_("About")}} {{WEBSITE_DISPLAY_NAME}}</h1>
 
 	<div class="container py-5">
 		<div class="row row-cols-1 row-cols-sm-2 g-3">
@@ -64,9 +64,9 @@
 				<div class="card-body">
 					<p class="card-text">
 						{{_("
-							ICS News is a news publication project at İzmir International Canadian School (ICS).
+							%(web_name)s is a news publication project at İzmir International Canadian School (ICS).
 							All publications are written and edited by ICS students. TODO: Add more to about section.
-							")}}
+							", web_name=WEBSITE_DISPLAY_NAME)}}
 					</p>
 				</div>
 			</div>
