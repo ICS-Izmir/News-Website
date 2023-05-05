@@ -104,7 +104,7 @@ class TestingConfig(ProductionConfig):
 class LocalConfig(ProductionConfig):
     CACHE_DEFAULT_TIMEOUT = 0
     RENDER_CACHE_TIMEOUT = 0
-    SERVER_NAME = "ics-news.ntw:5000"
+    SERVER_NAME = "icsizmir.ntw:5000"
     DEBUG = True
     ENABLE_ANALYTICS = True
 

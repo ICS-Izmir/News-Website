@@ -50,7 +50,14 @@ def ext_allowed(filename):
 @auth_required()
 @roles_required("admin")
 def index():
-    return render_template("admin_index.html")
+    return f"Main admin page is under construction. For publishing content, please go to <a href='{url_for('.publish_index')}'>the publishing page</a>.", 503
+
+
+@admin_pages.route("/publish")
+@auth_required()
+@roles_required("admin")
+def publish_index():
+    return render_template("admin/admin_publish_index.html")
 
 
 @admin_pages.route("/publish/newspaper", methods=["GET", "POST"])
