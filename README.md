@@ -23,12 +23,12 @@ Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
 ## How to run localy :
 1. Install the dependencies that are listed in the `requirements.txt` file.
 2. Add this to your `hosts` file *1:<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `ics-news.ntw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `www.ics-news.ntw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `blog.ics-news.ntw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `account.ics-news.ntw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `admin.ics-news.ntw`<br>
-	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `api.ics-news.ntw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `icsizmir.ltw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `www.icsizmir.ltw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `blog.icsizmir.ltw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `account.icsizmir.ltw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `admin.icsizmir.ltw`<br>
+	`127.0.0.1` &nbsp;&nbsp;&nbsp;&nbsp; `api.icsizmir.ltw`<br>
 	
 3. In the `config.py` file, change `AppConfig(ProductionConfig)` to `AppConfig(LocalConfig)`
 4. In the `config.py` file, change `ANALYTICS_TAG_ID` to your own Google Analytics G- ID. *2
@@ -41,7 +41,7 @@ Written with HTML 5, CSS 3, Bootstrap 5, and Python Flask.
 	`MAILJET_API_SECRET = "MAILJET API SECRET"`<br>
 
 8. Run the application with: `python app.py`
-9. Go to: http://ics-news.ntw:5000/
+9. Go to: http://icsizmir.ltw:5000/
 
 
 <br>
