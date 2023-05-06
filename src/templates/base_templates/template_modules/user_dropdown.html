@@ -12,7 +12,7 @@
         <li><hr class="dropdown-divider bg-light bg-opacity-25"></li>
 
         {% if current_user.has_role("admin") %}
-        <li><a href="{{url_for("admin_pages.index")}}" class="dropdown-item text-info"><i class="bi bi-command pe-2"></i>{{_("Admin Panel")}}</a></li>
+        <li><a href="{{url_for("admin_pages.publish_index")}}" class="dropdown-item text-info"><i class="bi bi-command pe-2"></i>{{_("Admin Panel")}}</a></li>
         {% endif %}
 
         <li><a href="{{url_for_security("logout")}}" class="dropdown-item text-warning"><i class="bi bi-box-arrow-left pe-2"></i>{{_("Logout")}}</a></li>
