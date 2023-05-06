@@ -25,92 +25,33 @@ This module is not complete.
 
 
 # ------- Libraries and utils -------
-import os
-from datetime import datetime
-from config import AppConfig
-from flask_security import auth_required, roles_required
-from flask_babel import gettext
-from flask import Blueprint, flash, redirect, render_template, request, url_for
-from modules.database import LatestPosts, Newspaper
-from werkzeug.utils import secure_filename
-from init import db
+from flask_security import current_user
+from flask import Blueprint, abort, request, url_for
+from modules.admin_content import content
 
 
 # ------- Blueprint init -------
 admin_pages = Blueprint("admin_pages", __name__, template_folder="../templates", static_folder="../static")
+admin_pages.register_blueprint(content, subdomain="admin", url_prefix="/content")
 
 
-# ------- Functions -------
-def ext_allowed(filename):
-    return ("." in filename) and (filename.rsplit(".", 1)[1].lower() in AppConfig.ALLOWED_EXTENSIONS)
+# ------- Access control -------
+@admin_pages.before_request
+def authenticate():
+    if request.path.startswith("/content/"):
+        if current_user.is_authenticated and current_user.has_role("publisher"):
+            return  
+        
+        abort(403)
+            
+    else:
+        if current_user.is_authenticated and current_user.has_role("admin"):
+            return  
+        
+        abort(403)
 
 
 # ------- Page routes -------
 @admin_pages.route("/")
-@auth_required()
-@roles_required("admin")
 def index():
-    return f"Main admin page is under construction. For publishing content, please go to <a href='{url_for('.publish_index')}'>the publishing page</a>.", 503
-
-
-@admin_pages.route("/publish")
-@auth_required()
-@roles_required("admin")
-def publish_index():
-    return render_template("admin/admin_publish_index.html")
-
-
-@admin_pages.route("/publish/newspaper", methods=["GET", "POST"])
-@auth_required()
-@roles_required("publisher", "admin")
-def publish_newspaper():
-    if request.method == "POST":
-        files = []
-        
-        for lang in AppConfig.SUPPORTED_LANGS:
-            files.append(request.files.get(f"file_{lang}"))
-        
-        credits = request.form.get("credits")
-        
-        for file in files:
-            if (not file) or (not ext_allowed(file.filename)):
-                flash(gettext("Invalid input! 102132"), "danger")
-                return redirect(url_for(".publish_newspaper"))
-        
-        if (not files) or (not credits):
-            flash(gettext("Invalid input!"), "danger")
-            return redirect(url_for(".publish_newspaper"))
-        
-        date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        filename = secure_filename(f"pub_{date_time}.pdf")
-        
-        for i, file in enumerate(files):
-            file.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename))
-            
-        date = datetime.now().strftime("%d/%m/%Y")
-        newspaper_db = Newspaper(date_time, date, credits)
-        latest_posts_db = LatestPosts("newspaper", AppConfig.NEWSPAPER_POSTS_TITLE_FORMAT.format(date=date), AppConfig.NEWSPAPER_POSTS_DEFAULT_IMG, url_for("newspaper_pages.index"), date)
-        
-        db.session.add(newspaper_db)
-        db.session.add(latest_posts_db)
-        db.session.commit()
-        
-        flash(gettext("Successfully published newspaper!"), "success")
-        return redirect(url_for(".publish_newspaper"))
-        
-    else:
-        return render_template("admin/publish_newspaper.html")
-
-
-@admin_pages.route("/publish/blog", methods=["GET", "POST"])
-@auth_required()
-@roles_required("publisher", "admin")
-def publish_blog():
-    return render_template("admin/publish_blog.html")
-
-
-@admin_pages.route("/publish/update", methods=["GET", "POST"])
-@auth_required()
-@roles_required("publisher", "admin")
-def publish_update():
-    return render_template("admin/publish_update.html")
+    return f"Main admin page is under construction. For publishing content, please go to <a href='{url_for('.content.publish_index')}'>the publishing page</a>.", 503

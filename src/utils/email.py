@@ -27,6 +27,7 @@ from flask import abort
 from flask_security import MailUtil
 from init import mailjet, debug_log, log
 from typing import Union
+from config import AppConfig
 
 
 # -=-=-= Mail util classes =-=-=-
@@ -40,7 +41,7 @@ class SecurityMailUtil(MailUtil):
                 "From":
                 {
                     "Email": sender,
-                    "Name": "ICS News Account"
+                    "Name": AppConfig.SECURITY_EMAIL_SENDER_NAME
                 },
                     
                 "To":
