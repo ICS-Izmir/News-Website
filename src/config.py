@@ -74,6 +74,7 @@ class ProductionConfig():
     SECURITY_RESET_PASSWORD_WITHIN = "2 days"
     SECURITY_TRACKABLE = True
     SECURITY_EMAIL_SENDER = "account@gigawhat.net"
+    SECURITY_EMAIL_SENDER_NAME = "ICS İzmir Account"
 
     # ------- Mailjet config -------
     MAILJET_API_KEY = os.getenv("MAILJET_API_KEY")
