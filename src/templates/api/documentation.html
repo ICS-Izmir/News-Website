@@ -1,0 +1,35 @@
+{% extends "base_templates/base.html" %}
+
+{% block title %}{{_("Home")}}{% endblock %}
+
+{% block body %}
+<div class="container pt-5">
+    <div class="">
+        <h2 class="fw-bold mb-0">{{_("V1 API Documentation")}}</h2>
+    </div>
+            
+    <div class="pt-5">
+        <h5 class="fw-bold">{{_("GET Endpoints")}}</h5>
+        <p class="font-monospace pb-4">
+            <strong>[GET] [list[NewspaperApi]]:</strong> /v1/get/newspaper/archive <br>
+            <strong>[GET] [NewspaperApi]:</strong> /v1/get/newspaper/date?query=DD-MM-YYYY <br>
+            <strong>[GET] [NewspaperApi]:</strong> /v1/get/newspaper/pub_num?query=X
+        </p>
+
+        <h5 class="fw-bold">{{_("NewspaperApi Response Model")}}</h5>
+        <p class="font-monospace pb-4">
+            { <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"credits": "John Smith, Jane Smith", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"date": "DD/MM/YYYY", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"file_datetime": "YYYY-MM-DD_HH-MM-SS", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"fliename": "pub_YYYY-MM-DD_HH-MM-SS.pdf", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"pdf_download_url": "http://icsizmir.ltw:5000/newspaper/download/publication/YYYY-MM-DD_HH-MM-SS", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"pdf_view_url": "http://icsizmir.ltw:5000/newspaper/view/publication/YYYY-MM-DD_HH-MM-SS", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"publication_num": 0 <br>
+            }
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}fixed-bottom{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base_templates/base.html" %}
+
+{% block title %}{{_("Home")}}{% endblock %}
+
+{% block body %}
+<div class="container pt-5">
+    <div class="">
+        <h2 class="fw-bold mb-0">{{_("ICS İzmir API")}}</h2>
+    </div>
+            
+    <div class="pt-3">
+        <a href="{{url_for("api.v1_documentation")}}">V1 API Documentation</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}fixed-bottom{% endblock %}
