@@ -32,6 +32,7 @@ from flask_security import auth_required, roles_required, current_user
 from flask_babel import gettext
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from modules.database import LatestPosts, Newspaper
+from utils.forms import BlogPostForm
 from werkzeug.utils import secure_filename
 from init import db
 
@@ -106,7 +107,8 @@ def publish_newspaper():
 @auth_required()
 @roles_required("publisher", "admin")
 def publish_blog():
-    return render_template("admin_content/publish_blog.html")
+    form = BlogPostForm()
+    return render_template("admin_content/publish_blog.html", form=form)
 
 
 @content.route("/publish/update", methods=["GET", "POST"])

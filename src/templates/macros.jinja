@@ -33,6 +33,22 @@
 {% endmacro %}
 
 
+{# Render form field with errors (If any errors exist) - No label #}
+{% macro render_field_with_errors_nl(field, spacing, div_type, l_class) %}
+    <div class="form-{{div_type}} mb-{{spacing}}">
+        {{field(**kwargs) | safe}}
+        
+        {% if field.errors %}
+        <ul class="mt-{{spacing}}">
+        {% for error in field.errors %}
+            <li>{{error}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
 {# Render form field errors (If any errors exist) #}
 {% macro render_field_errors(field, spacing) %}
     {% if field and field.errors %}

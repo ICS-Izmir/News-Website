@@ -1,4 +1,4 @@
-#  ICS News Website forms file.
+#  ICS News Website WTF forms file.
 #  Copyright 2023 Samyar Sadat Akhavi
 #  Written by Samyar Sadat Akhavi, 2023.
 #
@@ -20,3 +20,21 @@ Forms file for the ICS News Website.
 
 Contains all of the WTForms.
 """
+
+
+# ------- Libraries and utils -------
+from flask_wtf import FlaskForm
+from flask_ckeditor import CKEditorField
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+
+
+# ------- WTForms classes -------
+
+# ---- Blog post publication form ----
+class BlogPostForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    thumb = StringField("Thumbnail URL")
+    body = CKEditorField("Body", validators=[DataRequired()])
+    authors = StringField("Authors", validators=[DataRequired()])
+    submit = SubmitField("Submit")

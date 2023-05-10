@@ -6,6 +6,7 @@ Flask-Caching
 python-dotenv
 Flask-SQLAlchemy
 Flask-Babel
+flask-ckeditor
 email-validator
 bcrypt
 cryptography

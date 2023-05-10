@@ -20,6 +20,7 @@
 import logging
 import os
 from flask import Flask, request, session
+from flask_ckeditor import CKEditor
 from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
@@ -45,6 +46,7 @@ def localeselector():
 # ------- Flask and Flask plug-in init -------
 app = Flask(__name__)
 app.config.from_object(AppConfig)
+ckeditor = CKEditor(app)
 cache = Cache(app)
 db = SQLAlchemy(app)
 babel = Babel(app, locale_selector=localeselector)
