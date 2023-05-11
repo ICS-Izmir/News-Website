@@ -21,10 +21,13 @@
         {{form.body.label(class="form-label")}}
         {{render_field_with_errors_nl(form.body, 4, "", class="form-control rounded-3")}}
 
+        {{form.category.label(class="form-label")}}
+        {{render_field_with_errors_nl(form.category, 4, "")}}
+
         {{form.authors.label(class="form-label")}}
         {{render_field_with_errors_nl(form.authors, 4, "", class="form-control rounded-3")}}
         
-        {{render_field_with_errors_nl(form.submit, 5, "floating", class="w-100 mt-2 mb-2 btn btn-lg rounded-3 btn-outline-secondary")}}
+        {{render_field_with_errors_nl(form.submit, 5, "floating", class="w-100 mt-2 mb-2 btn btn-lg rounded-3 btn-outline-success")}}
     </form>
     
     {{ckeditor.load()}}

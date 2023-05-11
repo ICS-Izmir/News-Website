@@ -28,7 +28,7 @@ This module is not complete.
 import bleach
 from flask import Blueprint, abort, render_template, request, url_for
 from init import db
-from modules.database import Newspaper
+from modules.database import NewspaperPost
 
 
 # ------- Blueprint init -------
@@ -39,6 +39,8 @@ api = Blueprint("api", __name__, template_folder="../templates", static_folder="
 
 # ---- Newspaper model ----
 class NewspaperApi():
+    title: str 
+    thumbnail_url: str
     file_datetime: str 
     filename: str
     pdf_view_url: str
@@ -47,7 +49,9 @@ class NewspaperApi():
     date: str 
     credits: str
 
-    def __init__(self, file_datetime: str, filename: str, pdf_view_url: str, pdf_download_url: str, publication_num: int, date: str, credits: str):
+    def __init__(self, title: str, thumbnail_url: str, file_datetime: str, filename: str, pdf_view_url: str, pdf_download_url: str, publication_num: int, date: str, credits: str):
+        self.title = title
+        self.thumbnail_url = thumbnail_url
         self.file_datetime = file_datetime
         self.fliename = filename
         self.pdf_view_url = pdf_view_url
@@ -71,33 +75,33 @@ def v1_documentation():
 @api.route("/v1/get/newspaper/<filter>")
 def v1_get_newspaper(filter):
     query = request.args.get("query")
+    db_query = db.session.query(NewspaperPost)
     
     if filter == "archive":
-        query = db.session.query(Newspaper).all()
+        q = db_query.all()
         ret = []
-        query.reverse()
         
-        for query in query:
-            ret.append(NewspaperApi(query.file_datetime, f"pub_{query.file_datetime}.pdf", url_for("newspaper_pages.view_pub", date_time=query.file_datetime), url_for("newspaper_pages.download_pub", date_time=query.file_datetime), query.id, query.date, query.credits).__dict__)
+        q.reverse()
+        
+        for q in q:
+            ret.append(NewspaperApi(q.title, url_for("static", filename=q.img_url), q.file_datetime, f"pub_{q.file_datetime}.pdf", url_for("newspaper_pages.view_pub", date_time=q.file_datetime), url_for("newspaper_pages.download_pub", date_time=q.file_datetime), q.id, q.date, q.credits).__dict__)
         
         return ret
     
     elif filter == "date" and query:
-        query = db.session.query(Newspaper).filter_by(date=bleach.clean(query.replace("-", "/"))).first()
+        q = db_query.filter_by(date=bleach.clean(query.replace("-", "/"))).first()
         
-        if query:
-            return NewspaperApi(query.file_datetime, f"pub_{query.file_datetime}.pdf", url_for("newspaper_pages.view_pub", date_time=query.file_datetime), url_for("newspaper_pages.download_pub", date_time=query.file_datetime), query.id, query.date, query.credits).__dict__
+        if q:
+            return NewspaperApi(q.title, url_for("static", filename=q.img_url), q.file_datetime, f"pub_{q.file_datetime}.pdf", url_for("newspaper_pages.view_pub", date_time=q.file_datetime), url_for("newspaper_pages.download_pub", date_time=q.file_datetime), q.id, q.date, q.credits).__dict__
         
-        else:
-            return {}
+        return {}
     
     elif filter == "pub_num" and query:
-        query = db.session.query(Newspaper).filter_by(id=bleach.clean(query)).first()
+        q = db_query.filter_by(id=bleach.clean(query)).first()
         
-        if query:
-            return NewspaperApi(query.file_datetime, f"pub_{query.file_datetime}.pdf", url_for("newspaper_pages.view_pub", date_time=query.file_datetime), url_for("newspaper_pages.download_pub", date_time=query.file_datetime), query.id, query.date, query.credits).__dict__
+        if q:
+            return NewspaperApi(q.title, url_for("static", filename=q.img_url), q.file_datetime, f"pub_{q.file_datetime}.pdf", url_for("newspaper_pages.view_pub", date_time=q.file_datetime), url_for("newspaper_pages.download_pub", date_time=q.file_datetime), q.id, q.date, q.credits).__dict__
         
-        else:
-            return {}
+        return {}
     
-    abort(404)
+    abort(400)

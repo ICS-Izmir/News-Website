@@ -94,8 +94,17 @@ class ProductionConfig():
     UPLOAD_FOLDER = os.path.join(WORKING_DIR, "static/user-uploaded")
     ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
-    NEWSPAPER_POSTS_DEFAULT_IMG = "img/carousel/placeholder3.png"
+    POST_DEFAULT_IMG = "img/carousel/placeholder3.png"
     NEWSPAPER_POSTS_TITLE_FORMAT = "Newspaper {date}"
+    SCHOOL_UPDATE_CATEGORIES = {
+        "en_US": ["General Announcement", "Important Announcement", "Event Announcement"],
+        "tr_TR": ["Genel Duyuru", "Önemli Duyuru", "Etkinlik Duyurusu"]}
+    BLOG_CATEGORIES = {
+        "news": {
+            "en_US": ["Technology", "Science", "World News", "Local News", "Interview"],
+            "tr_TR": ["Teknoloji", "Bilim", "Dünya Haberi", "Yerel Haber", "Raportaj"]},
+        
+        "school": {"en_US": [], "tr_TR": []}}
 
 
 class TestingConfig(ProductionConfig):

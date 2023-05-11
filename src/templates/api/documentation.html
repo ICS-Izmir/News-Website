@@ -17,7 +17,7 @@
         </p>
 
         <h5 class="fw-bold">{{_("NewspaperApi Response Model")}}</h5>
-        <p class="font-monospace pb-4">
+        <p class="font-monospace pb-5">
             { <br>
             &nbsp;&nbsp;&nbsp;&nbsp;"credits": "John Smith, Jane Smith", <br>
             &nbsp;&nbsp;&nbsp;&nbsp;"date": "DD/MM/YYYY", <br>
@@ -26,10 +26,10 @@
             &nbsp;&nbsp;&nbsp;&nbsp;"pdf_download_url": "http://icsizmir.ltw:5000/newspaper/download/publication/YYYY-MM-DD_HH-MM-SS", <br>
             &nbsp;&nbsp;&nbsp;&nbsp;"pdf_view_url": "http://icsizmir.ltw:5000/newspaper/view/publication/YYYY-MM-DD_HH-MM-SS", <br>
             &nbsp;&nbsp;&nbsp;&nbsp;"publication_num": 0 <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"thumbnail_url": "{{url_for("static", filename="img/carousel/placeholder2.png")}}", <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;"title": "This is a title", <br>
             }
         </p>
     </div>
 </div>
 {% endblock %}
-
-{% block footer %}fixed-bottom{% endblock %}

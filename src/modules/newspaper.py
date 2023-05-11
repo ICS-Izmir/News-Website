@@ -29,7 +29,7 @@ import bleach
 from init import db
 from flask import Blueprint, abort, redirect, render_template, send_from_directory, url_for
 from flask_babel import get_locale
-from modules.database import Newspaper
+from modules.database import NewspaperPost
 
 
 # ------- Blueprint init -------
@@ -39,14 +39,14 @@ newspaper_pages = Blueprint("newspaper_pages", __name__, template_folder="../tem
 # ------- Page routes -------
 @newspaper_pages.route("/")
 def index():
-    query = db.session.query(Newspaper).limit(8).all()
+    query = db.session.query(NewspaperPost).limit(8).all()
     query.reverse()
     return render_template("newspaper_index.html", archive_list=query)
 
 
 @newspaper_pages.route("/view/archive")
 def view_archive():
-    query = db.session.query(Newspaper).all()
+    query = db.session.query(NewspaperPost).all()
     query.reverse()
     return render_template("newspaper/archive.html", archive_list=query)
 

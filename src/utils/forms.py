@@ -25,7 +25,8 @@ Contains all of the WTForms.
 # ------- Libraries and utils -------
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditorField
-from wtforms import StringField, SubmitField
+from flask_babel import gettext
+from wtforms import StringField, SubmitField, RadioField
 from wtforms.validators import DataRequired
 
 
@@ -33,8 +34,17 @@ from wtforms.validators import DataRequired
 
 # ---- Blog post publication form ----
 class BlogPostForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired()])
-    thumb = StringField("Thumbnail URL")
-    body = CKEditorField("Body", validators=[DataRequired()])
-    authors = StringField("Authors", validators=[DataRequired()])
-    submit = SubmitField("Submit")
+    title = StringField(gettext("Title"), validators=[DataRequired()])
+    thumb = StringField(gettext("Thumbnail URL"))
+    body = CKEditorField(gettext("Body"), validators=[DataRequired()])
+    category = RadioField(gettext("Category"), validators=[DataRequired()], choices=[])
+    authors = StringField(gettext("Authors"), validators=[DataRequired()])
+    submit = SubmitField(gettext("Submit"))
+    
+    
+# ---- School Update publication form ----
+class SchoolUpdatePostForm(FlaskForm):
+    title = StringField(gettext("Title"), validators=[DataRequired()])
+    body = CKEditorField(gettext("Body"), validators=[DataRequired()])
+    category = RadioField(gettext("Category"), validators=[DataRequired()], choices=[])
+    submit = SubmitField(gettext("Submit"))

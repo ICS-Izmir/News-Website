@@ -26,6 +26,7 @@ This module contains all of the database models.
 import json
 from flask import Blueprint, flash, render_template, request
 from flask_security import RoleMixin, SQLAlchemySessionUserDatastore, UserMixin
+from config import AppConfig
 from init import db, log
 
 
@@ -64,7 +65,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True)
     username = db.Column(db.String(255), unique=True)
-    pp_url = db.Column(db.String(255), default="img/logos/default_pp.png")
+    pp_url = db.Column(db.String(512), default="img/logos/default_pp.png")
     password = db.Column(db.String(255), nullable=False)
     last_login_at = db.Column(db.DateTime)
     current_login_at = db.Column(db.DateTime)
@@ -86,41 +87,49 @@ class SchoolUpdates(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     date_time = db.Column(db.String(30))
-    body = db.Column(db.String(4500))
+    body = db.Column(db.String(20000))
+    author = db.Column(db.String(400))
+    category = db.Column(db.String(35))
 
-    def __init__(self, title: str, date_time: str, body: str):
+    def __init__(self, title: str, date_time: str, body: str, author: str, category: str):
         self.title = title
         self.date_time = date_time
         self.body = body
+        self.author = author
+        self.category = category
 
 
 # ---- Newspaper table ----
-class Newspaper(db.Model):
+class NewspaperPost(db.Model):
     __bind_key__ = "newspaper"
     
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
     file_datetime = db.Column(db.String(120))
     date = db.Column(db.String(30))
     credits = db.Column(db.String(2500))
 
-    def __init__(self, file_datetime: str, date: str, credits: str):
+    def __init__(self, title: str, img_url: str, file_datetime: str, date: str, credits: str):
+        self.title = title 
+        self.img_url = img_url
         self.file_datetime = file_datetime
         self.date = date
         self.credits = credits
         
         
-# ---- Blog table ----
-class Blog(db.Model):
+# ---- Blog post table ----
+class BlogPost(db.Model):
     __bind_key__ = "blog"
     
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(20))
-    img_url = db.Column(db.String(150))
+    img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
     title = db.Column(db.String(200))
     date_time = db.Column(db.String(30))
     authors = db.Column(db.String(400))
     category = db.Column(db.String(35))
-    body_html = db.Column(db.String(20000))
+    body_html = db.Column(db.String(30000))
 
     def __init__(self, source: str, img_url: str, title: str, date_time: str, authors: str, category: str, body_html: str):
         self.source = source
@@ -137,7 +146,7 @@ class LatestPosts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(30))
     title = db.Column(db.String(200))
-    img_url = db.Column(db.String(150))
+    img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
     url = db.Column(db.String(150))
     date = db.Column(db.String(30))
 

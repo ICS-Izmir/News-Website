@@ -9,10 +9,15 @@
     {% for post in posts %}
     <div id="{{loop.index}}" class="my-5 px-4 border-light border-1 border bg-white shadow rounded-3 p-3">
 		<p class="d-inline fw-bold" style="font-size: 21px;">{{post.title}}</p>
-        <div class="text-secondary float-md-end">{{post.date_time}}</div>
+        <div class="text-secondary float-md-end">
+            {{post.date_time}} <br>
+            {{post.date_time}}
+        </div>
+        <div class="text-secondary ">{{post.author}}</div>
+        
         
         <hr class="mt-2 mb-4">
-            {{post.body}}
+            {{post.body | safe}}
         </ul>
 	</div>
     {% else %}

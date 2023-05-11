@@ -34,7 +34,7 @@
 
 
 {# Render form field with errors (If any errors exist) - No label #}
-{% macro render_field_with_errors_nl(field, spacing, div_type, l_class) %}
+{% macro render_field_with_errors_nl(field, spacing, div_type) %}
     <div class="form-{{div_type}} mb-{{spacing}}">
         {{field(**kwargs) | safe}}
         

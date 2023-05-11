@@ -31,8 +31,8 @@ from config import AppConfig
 from flask_security import auth_required, roles_required, current_user
 from flask_babel import gettext
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
-from modules.database import LatestPosts, Newspaper
-from utils.forms import BlogPostForm
+from modules.database import BlogPost, LatestPosts, NewspaperPost, SchoolUpdates
+from utils.forms import BlogPostForm, SchoolUpdatePostForm
 from werkzeug.utils import secure_filename
 from init import db
 
@@ -75,7 +75,7 @@ def publish_newspaper():
         
         for file in files:
             if (not file) or (not ext_allowed(file.filename)):
-                flash(gettext("Invalid input! 102132"), "danger")
+                flash(gettext("Invalid input!"), "danger")
                 return redirect(url_for(".publish_newspaper"))
         
         if (not files) or (not credits):
@@ -89,8 +89,10 @@ def publish_newspaper():
             file.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename))
             
         date = datetime.now().strftime("%d/%m/%Y")
-        newspaper_db = Newspaper(date_time, date, credits)
-        latest_posts_db = LatestPosts("newspaper", AppConfig.NEWSPAPER_POSTS_TITLE_FORMAT.format(date=date), AppConfig.NEWSPAPER_POSTS_DEFAULT_IMG, url_for("newspaper_pages.index"), date)
+        title = AppConfig.NEWSPAPER_POSTS_TITLE_FORMAT.format(date=date)
+        
+        newspaper_db = NewspaperPost(title, None, date_time, date, credits)
+        latest_posts_db = LatestPosts("newspaper", title, None, url_for("newspaper_pages.index"), date)
         
         db.session.add(newspaper_db)
         db.session.add(latest_posts_db)
@@ -108,11 +110,38 @@ def publish_newspaper():
 @roles_required("publisher", "admin")
 def publish_blog():
     form = BlogPostForm()
-    return render_template("admin_content/publish_blog.html", form=form)
+    form.category.choices = AppConfig.BLOG_CATEGORIES.get("news")
+    
+    if request.method == "POST" and form.validate_on_submit():
+        date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        post = BlogPost("news", form.thumb.data, form.title.data, date_time, form.authors.data, form.category.data, form.body.data)
+        
+        db.session.add(post)
+        db.session.commit()
+        
+        flash(gettext("Successfully published blog!"), "success")
+        return redirect(url_for(".publish_blog")) 
+        
+    else:
+        return render_template("admin_content/publish_blog.html", form=form)
 
 
 @content.route("/publish/update", methods=["GET", "POST"])
 @auth_required()
 @roles_required("publisher", "admin")
 def publish_update():
-    return render_template("admin_content/publish_update.html")
+    form = SchoolUpdatePostForm()
+    form.category.choices = AppConfig.SCHOOL_UPDATE_CATEGORIES
+    
+    if request.method == "POST" and form.validate_on_submit():
+        date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        post = SchoolUpdates(form.title.data, date_time, form.body.data, current_user.username, form.category.data)
+        
+        db.session.add(post)
+        db.session.commit()
+        
+        flash(gettext("Successfully published school update!"), "success")
+        return redirect(url_for(".publish_update")) 
+        
+    else:
+        return render_template("admin_content/publish_update.html", form=form)
