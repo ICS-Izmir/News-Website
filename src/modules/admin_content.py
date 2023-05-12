@@ -29,7 +29,7 @@ import os
 from datetime import datetime
 from config import AppConfig
 from flask_security import auth_required, roles_required, current_user
-from flask_babel import gettext
+from flask_babel import gettext, get_locale
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from modules.database import BlogPost, LatestPosts, NewspaperPost, SchoolUpdates
 from utils.forms import BlogPostForm, SchoolUpdatePostForm
@@ -110,10 +110,16 @@ def publish_newspaper():
 @roles_required("publisher", "admin")
 def publish_blog():
     form = BlogPostForm()
-    form.category.choices = AppConfig.BLOG_CATEGORIES.get("news")
+    categories = AppConfig.BLOG_CATEGORIES.get("news")
+    form.category.choices = categories.get(str(get_locale()))
     
     if request.method == "POST" and form.validate_on_submit():
         date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        
+        for i, cat in categories.get(str(get_locale())):
+            if form.category.data == cat:
+                form.category.data = categories
+        
         post = BlogPost("news", form.thumb.data, form.title.data, date_time, form.authors.data, form.category.data, form.body.data)
         
         db.session.add(post)
@@ -122,8 +128,7 @@ def publish_blog():
         flash(gettext("Successfully published blog!"), "success")
         return redirect(url_for(".publish_blog")) 
         
-    else:
-        return render_template("admin_content/publish_blog.html", form=form)
+    return render_template("admin_content/publish_blog.html", form=form)
 
 
 @content.route("/publish/update", methods=["GET", "POST"])
@@ -131,7 +136,7 @@ def publish_blog():
 @roles_required("publisher", "admin")
 def publish_update():
     form = SchoolUpdatePostForm()
-    form.category.choices = AppConfig.SCHOOL_UPDATE_CATEGORIES
+    form.category.choices = AppConfig.SCHOOL_UPDATE_CATEGORIES.get(str(get_locale()))
     
     if request.method == "POST" and form.validate_on_submit():
         date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -143,5 +148,4 @@ def publish_update():
         flash(gettext("Successfully published school update!"), "success")
         return redirect(url_for(".publish_update")) 
         
-    else:
-        return render_template("admin_content/publish_update.html", form=form)
+    return render_template("admin_content/publish_update.html", form=form)
