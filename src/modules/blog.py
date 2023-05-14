@@ -25,7 +25,11 @@ This module is not complete.
 
 
 # ------- Libraries and utils -------
+import bleach
+from config import AppConfig
 from flask import Blueprint, redirect, render_template, request, url_for
+from init import db
+from modules.database import BlogPost
 
 
 # ------- Blueprint init -------
@@ -36,7 +40,14 @@ blog_pages = Blueprint("blog_pages", __name__, template_folder="../templates", s
 @blog_pages.route("/")
 def index():
     source = request.args.get("source")
-    return render_template("blog_index.html")
+    
+    if source:
+        query = db.session.query(BlogPost).filter_by(source=bleach.clean(source)).limit(AppConfig.BLOG_MAX_DISPLAY).all()
+        
+    else:
+        query = db.session.query(BlogPost).limit(AppConfig.BLOG_MAX_DISPLAY).all()
+        
+    return render_template("blog_index.html", posts=query)
 
 
 @blog_pages.route("/school-blog")

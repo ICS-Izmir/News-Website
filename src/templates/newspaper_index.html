@@ -24,7 +24,7 @@
     <h3 class="mb-3 mt-4 ms-lg-3 ms-0">{{_("Archive:")}}</h3>
     <ul class="ms-lg-4 ms-0">
         {% for item in archive_list %}
-        <li><a href="{{url_for("newspaper_pages.view_pub", date_time=item.file_datetime)}}">No. {{item.id}} - Date: {{item.date}}</a></li>
+        <li><a href="{{url_for("newspaper_pages.view_pub", date_time=item.file_datetime)}}">#{{item.id}}: {{item.title}} | {{item.date}}</a></li>
         {% else %}
         <p class="my-5">Oops no archived publications were found!<br> 
 		This is probably a bug, please report it to: 

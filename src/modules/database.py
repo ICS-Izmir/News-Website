@@ -84,14 +84,16 @@ class User(db.Model, UserMixin):
 # -=-=-= General database =-=-=-
 # ---- School updates table ----
 class SchoolUpdates(db.Model):
+    __bind_key__ = "school"
+    
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120))
+    title = db.Column(db.JSON)
     date_time = db.Column(db.String(30))
-    body = db.Column(db.String(20000))
+    body = db.Column(db.JSON)
     author = db.Column(db.String(400))
-    category = db.Column(db.String(35))
+    category = db.Column(db.JSON)
 
-    def __init__(self, title: str, date_time: str, body: str, author: str, category: str):
+    def __init__(self, title: dict, date_time: str, body: dict, author: str, category: dict):
         self.title = title
         self.date_time = date_time
         self.body = body
@@ -104,13 +106,13 @@ class NewspaperPost(db.Model):
     __bind_key__ = "newspaper"
     
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120))
+    title = db.Column(db.JSON)
     img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
     file_datetime = db.Column(db.String(120))
     date = db.Column(db.String(30))
     credits = db.Column(db.String(2500))
 
-    def __init__(self, title: str, img_url: str, file_datetime: str, date: str, credits: str):
+    def __init__(self, title: dict, img_url: str, file_datetime: str, date: str, credits: str):
         self.title = title 
         self.img_url = img_url
         self.file_datetime = file_datetime
@@ -125,13 +127,13 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(20))
     img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
-    title = db.Column(db.String(200))
+    title = db.Column(db.JSON)
     date_time = db.Column(db.String(30))
     authors = db.Column(db.String(400))
-    category = db.Column(db.String(35))
-    body_html = db.Column(db.String(30000))
+    category = db.Column(db.JSON)
+    body_html = db.Column(db.JSON)
 
-    def __init__(self, source: str, img_url: str, title: str, date_time: str, authors: str, category: str, body_html: str):
+    def __init__(self, source: str, img_url: str, title: dict, date_time: str, authors: str, category: dict, body_html: dict):
         self.source = source
         self.img_url = img_url
         self.title = title
@@ -145,12 +147,12 @@ class BlogPost(db.Model):
 class LatestPosts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(30))
-    title = db.Column(db.String(200))
+    title = db.Column(db.JSON)
     img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
     url = db.Column(db.String(150))
     date = db.Column(db.String(30))
 
-    def __init__(self, source: str, title: str, img_url: str, url: str, date: str):
+    def __init__(self, source: str, title: dict, img_url: str, url: str, date: str):
         self.source = source
         self.title = title
         self.img_url = img_url

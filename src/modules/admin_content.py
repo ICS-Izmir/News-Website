@@ -15,12 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-"""
-Admin content management module for the ICS News Website.
+""" Admin content management module for the ICS News Website.
 
-Notes
------
-This module is not complete.
 """
 
 
@@ -115,14 +111,22 @@ def publish_blog():
     
     if request.method == "POST" and form.validate_on_submit():
         date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        date = datetime.now().strftime("%d/%m/%Y")
         
-        for i, cat in categories.get(str(get_locale())):
+        for i, cat in enumerate(categories.get(str(get_locale()))):
             if form.category.data == cat:
-                form.category.data = categories
+                category = {}
+                
+                for lang in AppConfig.SUPPORTED_LANGS:
+                    category.update({lang: categories.get(lang)[i]})
+                    
+                form.category.data = category
         
         post = BlogPost("news", form.thumb.data, form.title.data, date_time, form.authors.data, form.category.data, form.body.data)
+        latest_posts_db = LatestPosts("blog", form.title.data, form.thumb.data, url_for("index"), date)
         
         db.session.add(post)
+        db.session.add(latest_posts_db)
         db.session.commit()
         
         flash(gettext("Successfully published blog!"), "success")
@@ -136,10 +140,21 @@ def publish_blog():
 @roles_required("publisher", "admin")
 def publish_update():
     form = SchoolUpdatePostForm()
-    form.category.choices = AppConfig.SCHOOL_UPDATE_CATEGORIES.get(str(get_locale()))
+    categories = AppConfig.SCHOOL_UPDATE_CATEGORIES
+    form.category.choices = categories.get(str(get_locale()))
     
     if request.method == "POST" and form.validate_on_submit():
         date_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        
+        for i, cat in enumerate(categories.get(str(get_locale()))):
+            if form.category.data == cat:
+                category = {}
+                
+                for lang in AppConfig.SUPPORTED_LANGS:
+                    category.update({lang: categories.get(lang)[i]})
+                    
+                form.category.data = category
+        
         post = SchoolUpdates(form.title.data, date_time, form.body.data, current_user.username, form.category.data)
         
         db.session.add(post)

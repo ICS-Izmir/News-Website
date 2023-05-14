@@ -30,6 +30,7 @@ from modules.blog import blog_pages
 from modules.account import account_pages
 from modules.database import LatestPosts, SchoolUpdates, database
 from modules.admin import admin_pages
+from modules.school import school_pages
 from modules.redirects import redirects
 from modules.api import api
 from utils.google_analytics import Analytics
@@ -58,6 +59,7 @@ app.register_blueprint(newspaper_pages, url_prefix="/newspaper")
 app.register_blueprint(admin_pages, subdomain="admin")
 app.register_blueprint(account_pages, subdomain="account")
 app.register_blueprint(api, subdomain="api")
+app.register_blueprint(school_pages)
 app.register_blueprint(database)
 app.register_blueprint(redirects)
 
@@ -134,14 +136,6 @@ def index():
 @app.route("/privacy-policy")
 def privacy_policy():
     return render_template("privacy_policy.html")
-
-
-@app.route("/school-updates")
-@auth_required()
-@roles_accepted("student", "teacher")
-def school_updates():
-    query = db.session.query(SchoolUpdates).limit(40).all()
-    return render_template("updates_index.html", posts=query)
 
 
 # ------- Running the app -------

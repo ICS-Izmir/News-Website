@@ -50,13 +50,11 @@ class ProductionConfig():
     SQLALCHEMY_BINDS = {
         "accounts": "sqlite:///data/database/accounts.sqlite3",
         "blog": "sqlite:///data/database/blog.sqlite3",
-        "newspaper": "sqlite:///data/database/newspaper.sqlite3"
-    }
+        "newspaper": "sqlite:///data/database/newspaper.sqlite3",
+        "school": "sqlite:///data/database/school.sqlite3"}
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "pool_pre_ping": True
-    }
+    SQLALCHEMY_ENGINE_OPTIONS = {"pool_pre_ping": True}
 
     # ------- Flask-Security config -------
     SECURITY_PASSWORD_SALT = os.getenv("PASSWORD_ENCRYPT_SALT")
@@ -96,9 +94,12 @@ class ProductionConfig():
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
     POST_DEFAULT_IMG = "img/carousel/placeholder3.png"
     NEWSPAPER_POSTS_TITLE_FORMAT = "Newspaper {date}"
+    SCHOOL_UPDATES_MAX_DISPLAY = 40
+    BLOG_MAX_DISPLAY = 40
     SCHOOL_UPDATE_CATEGORIES = {
         "en_US": ["General Announcement", "Important Announcement", "Event Announcement"],
         "tr_TR": ["Genel Duyuru", "Önemli Duyuru", "Etkinlik Duyurusu"]}
+    
     BLOG_CATEGORIES = {
         "news": {
             "en_US": ["Technology", "Science", "World News", "Local News", "Interview"],

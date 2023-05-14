@@ -11,9 +11,9 @@
 		<p class="d-inline fw-bold" style="font-size: 21px;">{{post.title}}</p>
         <div class="text-secondary float-md-end">
             {{post.date_time}} <br>
-            {{post.date_time}}
+            {{post.category.get(get_locale() | string)}}
         </div>
-        <div class="text-secondary ">{{post.author}}</div>
+        <div class="text-primary">{{post.author}}</div>
         
         
         <hr class="mt-2 mb-4">
