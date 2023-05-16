@@ -87,13 +87,15 @@ class SchoolUpdates(db.Model):
     __bind_key__ = "school"
     
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.JSON)
+    lang = db.Column(db.String(8))
+    title = db.Column(db.String(200))
     date_time = db.Column(db.String(30))
-    body = db.Column(db.JSON)
+    body = db.Column(db.String(20000))
     author = db.Column(db.String(400))
     category = db.Column(db.JSON)
 
-    def __init__(self, title: dict, date_time: str, body: dict, author: str, category: dict):
+    def __init__(self, lang: str, title: str, date_time: str, body: dict, author: str, category: dict):
+        self.lang = lang
         self.title = title
         self.date_time = date_time
         self.body = body
@@ -126,15 +128,17 @@ class BlogPost(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(20))
+    lang = db.Column(db.String(8))
     img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
-    title = db.Column(db.JSON)
+    title = db.Column(db.String(400))
     date_time = db.Column(db.String(30))
     authors = db.Column(db.String(400))
     category = db.Column(db.JSON)
-    body_html = db.Column(db.JSON)
+    body_html = db.Column(db.String(30000))
 
-    def __init__(self, source: str, img_url: str, title: dict, date_time: str, authors: str, category: dict, body_html: dict):
+    def __init__(self, source: str, lang: str, img_url: str, title: str, date_time: str, authors: str, category: dict, body_html: str):
         self.source = source
+        self.lang = lang
         self.img_url = img_url
         self.title = title
         self.date_time = date_time
@@ -147,13 +151,15 @@ class BlogPost(db.Model):
 class LatestPosts(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     source = db.Column(db.String(30))
-    title = db.Column(db.JSON)
+    lang = db.Column(db.String(8))
+    title = db.Column(db.String(400))
     img_url = db.Column(db.String(512), default=AppConfig.POST_DEFAULT_IMG)
     url = db.Column(db.String(150))
     date = db.Column(db.String(30))
 
-    def __init__(self, source: str, title: dict, img_url: str, url: str, date: str):
+    def __init__(self, source: str, lang: str, title: str, img_url: str, url: str, date: str):
         self.source = source
+        self.lang = lang
         self.title = title
         self.img_url = img_url
         self.url = url

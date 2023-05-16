@@ -26,7 +26,7 @@ from datetime import datetime
 from config import AppConfig
 from flask_security import auth_required, roles_required, current_user
 from flask_babel import gettext, get_locale
-from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from modules.database import BlogPost, LatestPosts, NewspaperPost, SchoolUpdates
 from utils.forms import BlogPostForm, SchoolUpdatePostForm
 from werkzeug.utils import secure_filename
@@ -63,35 +63,41 @@ def publish_index():
 def publish_newspaper():
     if request.method == "POST":
         files = []
+        titles = {}
+        thumbnail = request.files.get("thumb")
+        credits = request.form.get("credits")
+        date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        date = datetime.now().strftime("%d/%m/%Y")
+        filename = secure_filename(f"pub_{date_time}")
         
         for lang in AppConfig.SUPPORTED_LANGS:
-            files.append(request.files.get(f"file_{lang}"))
-        
-        credits = request.form.get("credits")
-        
-        for file in files:
-            if (not file) or (not ext_allowed(file.filename)):
-                flash(gettext("Invalid input!"), "danger")
+            if request.files.get(f"file_{lang}") and ext_allowed(request.files.get(f"file_{lang}").filename):
+                files.append(request.files.get(f"file_{lang}"))
+            
+            else:
+                flash(gettext("Invalid file input!"), "danger")
+                return redirect(url_for(".publish_newspaper"))
+            
+            if request.form.get(f"title_{lang}"):
+                titles.update({lang: request.form.get(f"title_{lang}")})
+                
+            else:
+                flash(gettext("Invalid title input!"), "danger")
                 return redirect(url_for(".publish_newspaper"))
         
-        if (not files) or (not credits):
-            flash(gettext("Invalid input!"), "danger")
-            return redirect(url_for(".publish_newspaper"))
-        
-        date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        filename = secure_filename(f"pub_{date_time}.pdf")
-        
         for i, file in enumerate(files):
-            file.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename))
+            file.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename + ".pdf"))
             
-        date = datetime.now().strftime("%d/%m/%Y")
-        title = AppConfig.NEWSPAPER_POSTS_TITLE_FORMAT.format(date=date)
+        thumbnail.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/thumbnail/{filename}.{thumbnail.filename.rsplit('.', 1)[1]}"))
+        thumbnail_url = f"{AppConfig.UPLOAD_FOLDER_STATIC_RELATIVE}/newspaper/thumbnail/{filename}.{thumbnail.filename.rsplit('.', 1)[1]}"
         
-        newspaper_db = NewspaperPost(title, None, date_time, date, credits)
-        latest_posts_db = LatestPosts("newspaper", title, None, url_for("newspaper_pages.index"), date)
+        newspaper_db = NewspaperPost(titles, thumbnail_url, date_time, date, credits)
+        
+        for lang in AppConfig.SUPPORTED_LANGS:
+            latest_posts_db = LatestPosts("newspaper", lang, titles.get(lang), thumbnail_url, url_for("newspaper_pages.index"), date)
+            db.session.add(latest_posts_db)
         
         db.session.add(newspaper_db)
-        db.session.add(latest_posts_db)
         db.session.commit()
         
         flash(gettext("Successfully published newspaper!"), "success")
@@ -122,8 +128,8 @@ def publish_blog():
                     
                 form.category.data = category
         
-        post = BlogPost("news", form.thumb.data, form.title.data, date_time, form.authors.data, form.category.data, form.body.data)
-        latest_posts_db = LatestPosts("blog", form.title.data, form.thumb.data, url_for("index"), date)
+        post = BlogPost("news", form.lang.data, form.thumb.data, form.title.data, date_time, form.authors.data, form.category.data, form.body.data)
+        latest_posts_db = LatestPosts("blog", form.lang.data, form.title.data, form.thumb.data, url_for("index"), date)
         
         db.session.add(post)
         db.session.add(latest_posts_db)
@@ -155,7 +161,7 @@ def publish_update():
                     
                 form.category.data = category
         
-        post = SchoolUpdates(form.title.data, date_time, form.body.data, current_user.username, form.category.data)
+        post = SchoolUpdates(form.lang.data, form.title.data, date_time, form.body.data, current_user.username, form.category.data)
         
         db.session.add(post)
         db.session.commit()

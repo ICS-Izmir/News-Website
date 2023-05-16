@@ -89,11 +89,12 @@ class ProductionConfig():
     ANALYTICS_PROPERTY_ID = "XXXXXXXXX"
     TEMPORARY_FILE_DIR = os.path.join(INSTANCE_DIR, "data/temporary")
     RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
-    UPLOAD_FOLDER = os.path.join(WORKING_DIR, "static/user-uploaded")
+    UPLOAD_FOLDER_STATIC_RELATIVE = "user-uploaded"
+    UPLOAD_FOLDER = os.path.join(WORKING_DIR, "static", UPLOAD_FOLDER_STATIC_RELATIVE)
     ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
     POST_DEFAULT_IMG = "img/carousel/placeholder3.png"
-    NEWSPAPER_POSTS_TITLE_FORMAT = "Newspaper {date}"
+    NEWSPAPER_DEFAULT_POST_TITLE_FORMAT = "Newspaper {date}"
     SCHOOL_UPDATES_MAX_DISPLAY = 40
     BLOG_MAX_DISPLAY = 40
     SCHOOL_UPDATE_CATEGORIES = {

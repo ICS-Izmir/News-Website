@@ -21,10 +21,12 @@
 
 
 # ------- Libraries and utils -------
+import bleach
 from config import AppConfig
 from init import db
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from flask_security import auth_required, roles_accepted
+from flask_babel import get_locale
 from modules.database import SchoolUpdates
 
 
@@ -37,5 +39,7 @@ school_pages = Blueprint("school_pages", __name__, template_folder="../templates
 @auth_required()
 @roles_accepted("student", "teacher")
 def school_updates():
-    query = db.session.query(SchoolUpdates).limit(AppConfig.SCHOOL_UPDATES_MAX_DISPLAY).all()
+    lang = request.args.get("lang")
+    query = db.session.query(SchoolUpdates).filter_by(lang=str(get_locale()) if not lang else bleach.clean(lang)).limit(AppConfig.SCHOOL_UPDATES_MAX_DISPLAY).all()
+    
     return render_template("updates_index.html", posts=query)

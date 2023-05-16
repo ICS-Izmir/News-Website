@@ -16,7 +16,7 @@
         {% for pub in archive_list %}
             <a href="{{url_for("newspaper_pages.view_pub", date_time=pub.file_datetime)}}" class="text-decoration-none">
                 <ul class="list-group list-group-horizontal w-100">
-                    <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>{{pub.title}}</strong></li>
+                    <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>{{pub.title.get(get_locale() | string)}}</strong></li>
                     <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>{{pub.date}}</strong></li>
                     <li class="list-group-item border-top-0 list-group-item-action font-monospace rounded-0"><strong>#{{pub.id}}</strong></li>
                 </ul>

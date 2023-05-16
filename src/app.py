@@ -128,7 +128,7 @@ def log_request():
 # ------- Page routes -------
 @app.route("/")
 def index():
-    latest_posts = db.session.query(LatestPosts).all()
+    latest_posts = db.session.query(LatestPosts).filter_by(lang=str(get_locale())).all()
     latest_posts.reverse()
     return render_template("index.html", page_views=Analytics.pageviews_this_month(), latest_posts=latest_posts)
 

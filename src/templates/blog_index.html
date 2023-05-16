@@ -13,7 +13,7 @@
             {{post.date_time}} <br>
             {{post.category.get(get_locale() | string)}}
         </div>
-        <div class="text-primary">{{post.authors}}</div>
+        <div class="text-primary">{{post.authors | truncate(length=30, killwords=False, end='...')}}</div>
         
         
         <hr class="mt-2 mb-4">

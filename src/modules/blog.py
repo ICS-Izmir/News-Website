@@ -28,6 +28,7 @@ This module is not complete.
 import bleach
 from config import AppConfig
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask_babel import get_locale
 from init import db
 from modules.database import BlogPost
 
@@ -40,12 +41,13 @@ blog_pages = Blueprint("blog_pages", __name__, template_folder="../templates", s
 @blog_pages.route("/")
 def index():
     source = request.args.get("source")
+    lang = request.args.get("lang")
     
     if source:
-        query = db.session.query(BlogPost).filter_by(source=bleach.clean(source)).limit(AppConfig.BLOG_MAX_DISPLAY).all()
+        query = db.session.query(BlogPost).filter_by(source=bleach.clean(source)).filter_by(lang=str(get_locale()) if not lang else bleach.clean(lang)).limit(AppConfig.BLOG_MAX_DISPLAY).all()
         
     else:
-        query = db.session.query(BlogPost).limit(AppConfig.BLOG_MAX_DISPLAY).all()
+        query = db.session.query(BlogPost).filter_by(lang=str(get_locale()) if not lang else bleach.clean(lang)).limit(AppConfig.BLOG_MAX_DISPLAY).all()
         
     return render_template("blog_index.html", posts=query)
 

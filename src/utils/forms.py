@@ -28,6 +28,7 @@ from flask_ckeditor import CKEditorField
 from flask_babel import gettext
 from wtforms import StringField, SubmitField, RadioField
 from wtforms.validators import DataRequired
+from config import AppConfig
 
 
 # ------- WTForms classes -------
@@ -39,6 +40,7 @@ class BlogPostForm(FlaskForm):
     body = CKEditorField(gettext("Body"), validators=[DataRequired()])
     category = RadioField(gettext("Category"), validators=[DataRequired()], choices=[])
     authors = StringField(gettext("Authors"), validators=[DataRequired()])
+    lang = RadioField(gettext("Language"), validators=[DataRequired()], choices=AppConfig.SUPPORTED_LANGS)
     submit = SubmitField(gettext("Submit"))
     
     
@@ -47,4 +49,5 @@ class SchoolUpdatePostForm(FlaskForm):
     title = StringField(gettext("Title"), validators=[DataRequired()])
     body = CKEditorField(gettext("Body"), validators=[DataRequired()])
     category = RadioField(gettext("Category"), validators=[DataRequired()], choices=[])
+    lang = RadioField(gettext("Language"), validators=[DataRequired()], choices=AppConfig.SUPPORTED_LANGS)
     submit = SubmitField(gettext("Submit"))
