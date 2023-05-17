@@ -64,6 +64,33 @@ app.register_blueprint(database)
 app.register_blueprint(redirects)
 
 
+# ------- Create program folders -------
+def create_folder(path, name):
+    try:
+        os.mkdir(path)
+        debug_log.debug(f"[{name}] Folder created successfully.")
+        
+    except FileExistsError:
+        debug_log.debug(f"[{name}] Folder already exists, skipping creation.")
+    
+    except Exception:
+        log.fatal(f"[{name}] Folder creation failed, halting program.", exc_info=1)
+        debug_log.debug(f"[{name}] Folder creation failed, halting program.", exc_info=1)
+        
+        while True:
+            pass
+
+
+def create_folders():
+    create_folder(AppConfig.TEMP_DATA_STORAGE_PATH, "TemporaryDataStorage")
+    create_folder(AppConfig.NEWSPAPER_DATA_PATH, "NewspaperDataFolder")
+    create_folder(os.path.join(AppConfig.NEWSPAPER_DATA_PATH, "pdf"), "NewspaperDataFolderPdf")
+    create_folder(os.path.join(AppConfig.NEWSPAPER_DATA_PATH, "thumbnail"), "NewspaperDataFolderImg")
+    
+    for lang in AppConfig.SUPPORTED_LANGS:
+        create_folder(os.path.join(AppConfig.NEWSPAPER_DATA_PATH, "pdf", lang), f"NewspaperDataFolderPdf ({lang})")
+
+
 # ------- Locale selector -------
 @app.route("/set-lang/<lang>", methods=["POST"])
 def set_lang(lang):
@@ -139,6 +166,8 @@ def privacy_policy():
 
 
 # ------- Running the app -------
+create_folders()
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()

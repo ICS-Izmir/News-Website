@@ -23,14 +23,14 @@ import pkg_resources
 from dotenv import load_dotenv
 
 
-# ------- Load environment variables -------
-load_dotenv("secrets/vars.env")
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "secrets/ga_creds.json"
-
-
 # ------- Global variables -------
 WORKING_DIR = os.path.abspath(os.path.dirname(__file__))
 INSTANCE_DIR = os.path.join(WORKING_DIR, "instance")
+
+
+# ------- Load environment variables -------
+load_dotenv(os.path.join(WORKING_DIR, "secrets/vars.env"))
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(WORKING_DIR, "secrets/ga_creds.json")
 
 
 # ------- Config classes -------
@@ -80,17 +80,22 @@ class ProductionConfig():
 
     # ------- Flask-WTF config -------
     WTF_CSRF_CHECK_DEFAULT = False
+    
+    # ------- File paths -------
+    LOG_FILE_PATH = os.path.join(INSTANCE_DIR, "logs")
+    TEMP_DATA_STORAGE_PATH = os.path.join(INSTANCE_DIR, "data/temporary")
+    UPLOAD_PATH_STATIC_RELATIVE = "user-uploaded"
+    UPLOAD_PATH = os.path.join(WORKING_DIR, "static", UPLOAD_PATH_STATIC_RELATIVE)
+    NEWSPAPER_DATA_PATH = os.path.join(UPLOAD_PATH, "newspaper")
+    NEWSPAPER_DATA_PATH_STATIC_RELATIVE = os.path.join(UPLOAD_PATH_STATIC_RELATIVE, "newspaper")
+    PROFILE_PICTURES_PATH = os.path.join(UPLOAD_PATH, "img/profile_pictures")
 
     # ------- Module configs -------
-    LOG_FILE_PATH = os.path.join(INSTANCE_DIR, "logs")
     LOG_LEVEL = logging.INFO
     ENABLE_ANALYTICS = True
     ANALYTICS_TAG_ID = "G-XXXXXXXXXX"
     ANALYTICS_PROPERTY_ID = "XXXXXXXXX"
-    TEMPORARY_FILE_DIR = os.path.join(INSTANCE_DIR, "data/temporary")
     RENDER_CACHE_TIMEOUT = CACHE_DEFAULT_TIMEOUT
-    UPLOAD_FOLDER_STATIC_RELATIVE = "user-uploaded"
-    UPLOAD_FOLDER = os.path.join(WORKING_DIR, "static", UPLOAD_FOLDER_STATIC_RELATIVE)
     ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}
     SUPPORTED_LANGS = ["en_US", "tr_TR"]
     POST_DEFAULT_IMG = "img/carousel/placeholder3.png"

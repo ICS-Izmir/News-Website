@@ -36,7 +36,7 @@ from config import AppConfig
 # ---- Blog post publication form ----
 class BlogPostForm(FlaskForm):
     title = StringField(gettext("Title"), validators=[DataRequired()])
-    thumb = StringField(gettext("Thumbnail URL"))
+    thumb = StringField(gettext("Thumbnail URL (relative to static)"))
     body = CKEditorField(gettext("Body"), validators=[DataRequired()])
     category = RadioField(gettext("Category"), validators=[DataRequired()], choices=[])
     authors = StringField(gettext("Authors"), validators=[DataRequired()])

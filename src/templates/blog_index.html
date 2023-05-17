@@ -5,26 +5,39 @@
 {% block body %}
 <div class="container my-4">
     <h2 class="text-center fw-bold">{{_("Blog")}}</h2>
-	
-    {% for post in posts %}
-    <div id="{{loop.index}}" class="my-5 px-4 border-light border-1 border bg-white shadow rounded-3 p-3">
-		<p class="d-inline fw-bold" style="font-size: 21px;">{{post.title}}</p>
-        <div class="text-secondary float-md-end">
-            {{post.date_time}} <br>
-            {{post.category.get(get_locale() | string)}}
+
+    <div class="album pb-sm-5 pt-4 pb-4">
+        <div class="container">
+            <div class="col g-3">
+                {% for post in posts %}
+                <div id="{{loop.index}}" class="row">
+                    <div class="shadow rounded-3 border border-1 row ps-0">
+                        <img class="col col-3 p-0 rounded-start-3" src="{{url_for("static", filename=post.img_url)}}">
+    
+                        <div class="col m-3">
+                            <a href="{{url_for("blog_pages.view_blog", id=post.id)}}" class="d-inline fw-bold text-dark" style="font-size: 21px;">{{post.title}}</a>
+                            
+                            <div class="text-secondary float-md-end">
+                                {{post.date_time}} <br>
+                                {{post.category.get(get_locale() | string)}}
+                            </div>
+                            
+                            <div class="text-success">{{post.authors | truncate(length=30, killwords=False, end="...")}}</div>
+                            
+                            <hr class="mt-2 mb-4">
+                            {{(post.body_html | safe) | truncate(length=100, killwords=False, end="...")}}
+                            <a href="{{url_for("blog_pages.view_blog", id=post.id)}}">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p class="my-5">Oops no posts were found!<br> 
+                This is probably a bug, please report it to: 
+                <a href="mailto:samyarsadat@gigawhat.net">samyarsadat@gigawhat.net</a></p>
+                {% endfor %}
+            </div>
         </div>
-        <div class="text-primary">{{post.authors | truncate(length=30, killwords=False, end='...')}}</div>
-        
-        
-        <hr class="mt-2 mb-4">
-            {{(post.body_html | safe) | truncate(length=100, killwords=False, end='...')}}
-        </ul>
-	</div>
-    {% else %}
-    <p class="my-5">Oops no posts were found!<br> 
-    This is probably a bug, please report it to: 
-    <a href="mailto:samyarsadat@gigawhat.net">samyarsadat@gigawhat.net</a></p>
-    {% endfor %}
+    </div>
 
     <div class="d-lg-none d-block m-5">ㅤ</div>
     <div class="d-lg-none d-block m-4">ㅤ</div>

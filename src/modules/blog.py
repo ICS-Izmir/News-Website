@@ -60,3 +60,7 @@ def school_blog():
 @blog_pages.route("/news-blog")
 def news_blog():
     return redirect(url_for(".index", source="news"))
+
+@blog_pages.route("/news-blog")
+def view_blog(id):
+    return redirect(url_for(".index"))

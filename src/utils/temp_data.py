@@ -34,7 +34,7 @@ from typing import Union
 
 
 # ------- Global variables -------
-TEMPORARY_FILE_DIR = AppConfig.TEMPORARY_FILE_DIR
+TEMPORARY_FILE_DIR = AppConfig.TEMP_DATA_STORAGE_PATH
 # SP_QUIZ_TEMP_FILE = os.path.join(TEMPORARY_FILE_DIR, AppConfig.SP_QUIZ_TEMP_DATA_FILE)
 
 

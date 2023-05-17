@@ -86,10 +86,10 @@ def publish_newspaper():
                 return redirect(url_for(".publish_newspaper"))
         
         for i, file in enumerate(files):
-            file.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename + ".pdf"))
+            file.save(os.path.join(AppConfig.NEWSPAPER_DATA_PATH, f"pdf/{AppConfig.SUPPORTED_LANGS[i]}", filename + ".pdf"))
             
-        thumbnail.save(os.path.join(AppConfig.UPLOAD_FOLDER, f"newspaper/thumbnail/{filename}.{thumbnail.filename.rsplit('.', 1)[1]}"))
-        thumbnail_url = f"{AppConfig.UPLOAD_FOLDER_STATIC_RELATIVE}/newspaper/thumbnail/{filename}.{thumbnail.filename.rsplit('.', 1)[1]}"
+        thumbnail.save(os.path.join(AppConfig.NEWSPAPER_DATA_PATH, f"thumbnail/{filename}.{thumbnail.filename.rsplit('.', 1)[1]}"))
+        thumbnail_url = f"{AppConfig.NEWSPAPER_DATA_PATH_STATIC_RELATIVE}/thumbnail/{filename}.{thumbnail.filename.rsplit('.', 1)[1]}"
         
         newspaper_db = NewspaperPost(titles, thumbnail_url, date_time, date, credits)
         
