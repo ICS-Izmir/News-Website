@@ -61,6 +61,8 @@ def school_blog():
 def news_blog():
     return redirect(url_for(".index", source="news"))
 
-@blog_pages.route("/news-blog")
+
+@blog_pages.route("/post/view/<id>")
 def view_blog(id):
-    return redirect(url_for(".index"))
+    query = db.session.query(BlogPost).filter_by(id=bleach.clean(id)).first()
+    return render_template("blog/view_blog.html", post=query)
