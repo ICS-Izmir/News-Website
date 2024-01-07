@@ -70,4 +70,4 @@ If you think that you have found a bug please report it <a href="https://github.
 <br>
 <br>
 
-Copyright © 2023 Samyar Sadat Akhavi.
+Copyright © 2023-2024 Samyar Sadat Akhavi.
